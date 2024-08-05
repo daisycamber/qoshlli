@@ -3,6 +3,7 @@
   <head>
     <title>Video Chat - Qoshlli</title>
     <meta name="description" content="Video chat with you friends, family, coworkers or classroom.">
+    <script src="/qrcode.min.js"></script>
     <style type="text/css">
         * {
           box-sizing: border-box;
@@ -82,6 +83,10 @@
 </div>
 </div>
 <button class="btn btn-lg btn-outline-primary" id="please-interact">Join a meeting</button>
+    <hr>
+    <div style="display: flex; justify-content: space-around;"><div id="shareqrcode" style="border-style: solid; border-width: 15px; border-radius: 5px; border-color: #EEEEEE;"></div></div>
+    <hr>
+    <p>Provided by <a href="https://lotteh.com">lotteh.com</a>.</p>
 <hr>
         <script>
           /// <reference path="../messages.d.ts" />
@@ -286,7 +291,29 @@ callButton.addEventListener("click", async () => {
 function copyToClipboard(el) {
         navigator.clipboard.writeText(document.getElementById(el).innerHTML);
 }
-
+          function drawQR(){
+var qrdiv = document.getElementById("shareqrcode");
+	if(!qrdiv) return;
+	var qr = new QRCode(qrdiv, "https://qoshlli.com");
+	var image = qrdiv.querySelector('img');
+        image.style.width = "100%";
+        image.style.height = "100%";
+        image.style.maxWidth = "160px";
+	image.alt = "Share this page by scanning a QR code.";
+        function downloadQrImage(url, filename) {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = '{{ the_site_name }} - ' + filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+        function downloadQr(){
+                downloadQrImage(image.src, 'QR Code');
+        }
+        qrdiv.onclick = downloadQr;
+          }
+          drawQR();
     </script>
   </body>
 </html>
