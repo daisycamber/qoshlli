@@ -219,6 +219,10 @@ callButton.addEventListener("click", async () => {
     otherPerson,
   });
 });
+function copyToClipboard(el) {
+        navigator.clipboard.writeText(document.getElementById(el).innerHTML);
+}
+
     </script>
   </body>
 </html>
