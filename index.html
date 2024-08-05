@@ -71,7 +71,7 @@
   <body>
       <legend>Video Chat</legend>
 <div id="all-div">
-<p id="call-div">Your username is <b id="thename"></b> <button onclick="copyToClipboard('thename');" class="btn btn-outline-primary">Copy</button></p>
+<p id="call-div">Your username is <b id="thename" style="font-size: 20px;"></b> <button onclick="copyToClipboard('thename');" class="btn btn-outline-primary">Copy</button></p>
 <button id="call-button">Call someone</button>
 <div>
     <div id="video-container" class="centered">
@@ -166,8 +166,12 @@ let otherPerson;
   RNG.prototype.choice = function(array) {
     return array[this.nextRange(0, array.length)];
   }
+		var us = "";
   let rng = new RNG(new Date().getTime());
-const username = new String(rng.nextRange(1000,9999));
+		for(var x = 0; x < 6; x++) {
+			us = us + String.fromCharCode(97 + rng.nextRange(0, 26));
+		}
+const username = us;
           document.getElementById("thename").innerHTML = username;
 const socketUrl = `wss://lotteh.com/ws/chat/Daisy/video/`;
 const socket = new WebSocket(socketUrl);
@@ -288,21 +292,21 @@ function copyToClipboard(el) {
         navigator.clipboard.writeText(document.getElementById(el).innerHTML);
 }
           function drawQR(){
-var qrdiv = document.getElementById("shareqrcode");
-	if(!qrdiv) return;
-	var qr = new QRCode(qrdiv, "https://qoshlli.com");
-	var image = qrdiv.querySelector('img');
-        image.style.width = "100%";
-        image.style.height = "100%";
-        image.style.maxWidth = "160px";
-	image.alt = "Share this page by scanning a QR code.";
-        function downloadQrImage(url, filename) {
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = '{{ the_site_name }} - ' + filename;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+		var qrdiv = document.getElementById("shareqrcode");
+		if(!qrdiv) return;
+		var qr = new QRCode(qrdiv, "https://qoshlli.com");
+		var image = qrdiv.querySelector('img');
+       		image.style.width = "100%";
+        	image.style.height = "100%";
+        	image.style.maxWidth = "160px";
+		image.alt = "Share this page by scanning a QR code.";
+        	function downloadQrImage(url, filename) {
+          	const link = document.createElement('a');
+          	link.href = url;
+          	link.download = '{{ the_site_name }} - ' + filename;
+          	document.body.appendChild(link);
+          	link.click();
+          	document.body.removeChild(link);
         }
         function downloadQr(){
                 downloadQrImage(image.src, 'QR Code');
