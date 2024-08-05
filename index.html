@@ -172,9 +172,15 @@ let otherPerson;
 			us = us + String.fromCharCode(97 + rng.nextRange(0, 26));
 		}
 const username = us;
-          document.getElementById("thename").innerHTML = username;
+document.getElementById("thename").innerHTML = username;
 const socketUrl = `wss://lotteh.com/ws/chat/Daisy/video/`;
-const socket = new WebSocket(socketUrl);
+var socket = new WebSocket(socketUrl);
+socket.addEventListener("close", () => {
+	console.log("websocket closed");
+	setTimeout(function() {
+		socket = new WebSocket(socketUrl);
+	}, 10000);
+});
 /**
  * Sends the message over the socket.
  * @param {WebSocketMessage} message The message to send
