@@ -10,8 +10,8 @@
         }
 
         body {
-          margin: 0;
-          font-size: 14px;
+          margin: 20;
+          font-size: 30px;
         }
 
         .centered {
@@ -271,22 +271,18 @@ document.addEventListener("click", async () => {
       for (const track of localStream.getTracks()) {
         webrtc.addTrack(track, localStream);
       }
-/*      const localVideo = document.getElementById("local-video");
-      localVideo.srcObject = localStream;
-      localVideo.play();
-      setTimeout(function() {
-        localVideo.play();
-      }, 1000);*/
     });
 });
 hideVideoCall();
 callButton.addEventListener("click", async () => {
   otherPerson = prompt("Who would you like to call?");
-  showVideoCall();
-  sendMessageToSignallingServer({
-    channel: "start_call",
-    otherPerson,
-  });
+  if(otherPerson) {
+    showVideoCall();
+    sendMessageToSignallingServer({
+      channel: "start_call",
+      otherPerson,
+    });
+  }
 });
 function copyToClipboard(el) {
         navigator.clipboard.writeText(document.getElementById(el).innerHTML);
