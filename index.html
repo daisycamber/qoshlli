@@ -1,1 +1,224 @@
-Hello world
+<html>
+  <head>
+    
+  </head>
+  <body>
+      <legend>Video Chat</legend>
+<div id="all-div">
+<p id="call-div">Your username is <b id="thename"></b> <button onclick="copyToClipboard('thename');" class="btn btn-outline-primary">Copy</button></p>
+<button id="call-button">Call someone</button>
+<div>
+    <div id="video-container" class="centered">
+      <div id="videos">
+        <video id="remote-video" autoplay="autoplay"></video>
+        <iframe id="local-video" src="https://quoshlli.com/mirror.html"></iframe>
+      </div>
+    </div>
+</div>
+</div>
+<button class="btn btn-lg btn-outline-primary" id="please-interact">Join a meeting</button>
+<hr>
+        <script>
+          /// <reference path="../messages.d.ts" />
+
+/**
+ * Hides the given element by setting `display: none`.
+ * @param {HTMLElement} element The element to hide
+ */
+function hideElement(element) {
+  element.style.display = "none";
+}
+
+/**
+ * Shows the given element by resetting the display CSS property.
+ * @param {HTMLElement} element The element to show
+ */
+function showElement(element) {
+  element.style.display = "";
+}
+
+const callButton = document.getElementById("call-button");
+const callDiv = document.getElementById("call-div");
+const allDiv = document.getElementById("all-div");
+const pleaseInteract = document.getElementById("please-interact");
+const videoContainer = document.getElementById("video-container");
+
+function playVideos() {
+  try {
+    document.getElementById('remote-video').play();
+  } catch { }
+  /*  try {
+    document.getElementById('local-video').play();
+  } catch { }*/
+}
+
+/**
+ * Hides both local and remote video, but shows the "call" button.
+ */
+function hideVideoCall() {
+  hideElement(videoContainer);
+  hideElement(allDiv);
+  showElement(callButton);
+}
+
+/**
+ * Shows both local and remote video, and hides the "call" button.
+ */
+function showVideoCall() {
+  hideElement(callButton);
+  showElement(videoContainer);
+  hideElement(callDiv);
+}
+/** @type {string} */
+let otherPerson;
+  function RNG(seed) {
+    // LCG using GCC's constants
+    this.m = 0x80000000; // 2**31;
+    this.a = 1103515245;
+    this.c = 12345;
+    this.state = seed ? seed : Math.floor(Math.random() * (this.m - 1));
+  }
+  RNG.prototype.nextInt = function() {
+    this.state = (this.a * this.state + this.c) % this.m;
+    return this.state;
+  }
+  RNG.prototype.nextFloat = function() {
+    // returns in range [0,1]
+    return this.nextInt() / (this.m - 1);
+  }
+  RNG.prototype.nextRange = function(start, end) {
+    // returns in range [start, end): including start, excluding end
+    // can't modulu nextInt because of weak randomness in lower bits
+    let rangeSize = end - start;
+    let randomUnder1 = this.nextInt() / this.m;
+    return start + Math.floor(randomUnder1 * rangeSize);
+  }
+  RNG.prototype.choice = function(array) {
+    return array[this.nextRange(0, array.length)];
+  }
+  let rng = new RNG(new Date().getTime());
+const username = new String(rng.nextRange(1000,9999));
+          document.getElementById("thename").innerHTML = username;
+const socketUrl = `wss://lotteh.com/ws/chat/Daisy/video/`;
+const socket = new WebSocket(socketUrl);
+/**
+ * Sends the message over the socket.
+ * @param {WebSocketMessage} message The message to send
+ */
+function sendMessageToSignallingServer(message) {
+  const json = JSON.stringify(message);
+  socket.send(json);
+}
+// log in directly after the socket was opened
+socket.addEventListener("open", () => {
+  console.log("websocket connected");
+  sendMessageToSignallingServer({
+    channel: "login",
+    name: username,
+  });
+});
+socket.addEventListener("message", (event) => {
+  const message = JSON.parse(event.data.toString());
+  handleMessage(message);
+  playVideos();
+});
+/**
+ * Processes the incoming message.
+ * @param {WebSocketMessage} message The incoming message
+ */
+async function handleMessage(message) {
+  switch (message.channel) {
+    case "start_call":
+      console.log(`receiving call from ${message.with}`);
+      otherPerson = message.otherPerson;
+      showVideoCall()
+      const offer = await webrtc.createOffer();
+      await webrtc.setLocalDescription(offer);
+      sendMessageToSignallingServer({
+        channel: "webrtc_offer",
+        offer,
+        otherPerson,
+      });
+      break;
+    case "webrtc_ice_candidate":
+      console.log("received ice candidate");
+      await webrtc.addIceCandidate(message.candidate);
+      break;
+    case "webrtc_offer":
+      console.log("received webrtc offer");
+      await webrtc.setRemoteDescription(message.offer);
+      const answer = await webrtc.createAnswer();
+      await webrtc.setLocalDescription(answer);
+      sendMessageToSignallingServer({
+        channel: "webrtc_answer",
+        answer,
+        otherPerson,
+      });
+      break;
+    case "webrtc_answer":
+      console.log("received webrtc answer");
+      await webrtc.setRemoteDescription(message.answer);
+      break;
+    default:
+      console.log("unknown message", message);
+      break;
+  }
+}
+const webrtc = new RTCPeerConnection({
+  iceServers: [
+    {
+      urls: [
+        "stun:stun.stunprotocol.org",
+      ],
+    },
+  ],
+});
+webrtc.addEventListener("icecandidate", (event) => {
+  if (!event.candidate) {
+    return;
+  }
+  sendMessageToSignallingServer({
+    channel: "webrtc_ice_candidate",
+    candidate: event.candidate,
+    otherPerson,
+  });
+});
+webrtc.addEventListener("track", (event) => {
+  /** @type {HTMLVideoElement} */
+  const remoteVideo = document.getElementById("remote-video");
+  remoteVideo.srcObject = event.streams[0];
+  remoteVideo.play();
+  playVideos();
+});
+document.addEventListener("click", async () => {
+  hideElement(pleaseInteract);
+  showElement(allDiv);
+  navigator
+    .mediaDevices
+    .getUserMedia({ video: true, audio: { echoCancellation: true } })
+    .then((localStream) => {
+      /** @type {HTMLVideoElement} */
+      for (const track of localStream.getTracks()) {
+        webrtc.addTrack(track, localStream);
+      }
+/*      const localVideo = document.getElementById("local-video");
+      localVideo.srcObject = localStream;
+      localVideo.play();
+      setTimeout(function() {
+        localVideo.play();
+      }, 1000);*/
+    });
+});
+hideVideoCall();
+callButton.addEventListener("click", async () => {
+  otherPerson = prompt("Who would you like to call?");
+  showVideoCall();
+  sendMessageToSignallingServer({
+    channel: "start_call",
+    otherPerson,
+  });
+});
+
+    </script>
+  </body>
+</html>
