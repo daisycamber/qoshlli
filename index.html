@@ -299,7 +299,7 @@ hideVideoCall();
 callButton.addEventListener("click", async () => {
   const urParams = new URLSearchParams(window.location.search);
   var key = urParams.get('key');
-  var otherPerson = null;
+  otherPerson = null;
   if(key) {
     otherPerson = key;
   } else {
