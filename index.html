@@ -282,7 +282,9 @@ webrtc.addEventListener("track", (event) => {
   remoteVideo.play();
   playVideos();
 });
+var callStarted = false;
 document.addEventListener("click", async () => {
+  if(!callStarted) {
   hideElement(pleaseInteract);
   showElement(allDiv);
   navigator
@@ -298,6 +300,8 @@ document.addEventListener("click", async () => {
   var key = urParams.get('key');
   if(key) {
     callButton.click();
+  }
+  callStarted = true;
   }
 });
 hideVideoCall();
