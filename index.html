@@ -294,6 +294,11 @@ document.addEventListener("click", async () => {
         webrtc.addTrack(track, localStream);
       }
     });
+  const urParams = new URLSearchParams(window.location.search);
+  var key = urParams.get('key');
+  if(key) {
+    callButton.click();
+  }
 });
 hideVideoCall();
 callButton.addEventListener("click", async () => {
