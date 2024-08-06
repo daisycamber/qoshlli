@@ -115,9 +115,9 @@ const pleaseInteract = document.getElementById("please-interact");
 const videoContainer = document.getElementById("video-container");
 const theLink = document.getElementById('the-link')
 
-hideElement();
+hideElement(theLink);
 
-const up = URLSearchParams(window.locaation.search);
+const up = URLSearchParams(window.location.search);
 if(up.get('key')) {
     theLink.innerHTML = "https://qoshlli.com/?key=" + up.get('key');
 }
