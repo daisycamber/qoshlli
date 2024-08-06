@@ -285,7 +285,14 @@ document.addEventListener("click", async () => {
 });
 hideVideoCall();
 callButton.addEventListener("click", async () => {
-  otherPerson = prompt("Who would you like to call?");
+  const urParams = new URLSearchParams(queryString);
+  var key = urParams.get('key');
+  var otherPerson = null;
+  if(key) {
+    otherPerson = key;
+  } else {
+    otherPerson = prompt("Who would you like to call?");
+  }
   if(otherPerson) {
     showVideoCall();
     sendMessageToSignallingServer({
