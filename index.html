@@ -297,7 +297,7 @@ document.addEventListener("click", async () => {
 });
 hideVideoCall();
 callButton.addEventListener("click", async () => {
-  const urParams = new URLSearchParams(queryString);
+  const urParams = new URLSearchParams(window.location.search);
   var key = urParams.get('key');
   var otherPerson = null;
   if(key) {
