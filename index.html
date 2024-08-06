@@ -283,26 +283,29 @@ webrtc.addEventListener("track", (event) => {
   playVideos();
 });
 var callStarted = false;
+var videoStarted = false;
 document.addEventListener("click", async () => {
-  if(!callStarted) {
-  hideElement(pleaseInteract);
-  showElement(allDiv);
-  navigator
-    .mediaDevices
-    .getUserMedia({ video: true, audio: { echoCancellation: true } })
-    .then((localStream) => {
-      /** @type {HTMLVideoElement} */
-      for (const track of localStream.getTracks()) {
-        webrtc.addTrack(track, localStream);
-      }
-    });
-  const urParams = new URLSearchParams(window.location.search);
-  var key = urParams.get('key');
-  if(key) {
-    callButton.click();
-  }
-  callStarted = true;
-  }
+  if(!videoStarted) {
+	  hideElement(pleaseInteract);
+	  showElement(allDiv);
+	  navigator
+	    .mediaDevices
+	    .getUserMedia({ video: true, audio: { echoCancellation: true } })
+	    .then((localStream) => {
+	      /** @type {HTMLVideoElement} */
+	      for (const track of localStream.getTracks()) {
+	        webrtc.addTrack(track, localStream);
+	      }
+	    });
+	  videoStarted = true;
+	  } else if(!callStarted) {
+		  const urParams = new URLSearchParams(window.location.search);
+		  var key = urParams.get('key');
+		  if(key) {
+		    callButton.click();
+		  }
+		  callStarted = true;
+	  }
 });
 hideVideoCall();
 callButton.addEventListener("click", async () => {
