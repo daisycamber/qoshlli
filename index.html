@@ -123,10 +123,6 @@ const theLink = document.getElementById('the-link')
 
 hideElement(theLink);
 
-const up = new URLSearchParams(window.location.search);
-if(up.get('key')) {
-    theLink.innerHTML = "https://qoshlli.com/?key=" + up.get('key');
-}
 
 function playVideos() {
   try {
@@ -187,6 +183,7 @@ let otherPerson;
 			us = us + String.fromCharCode(97 + rng.nextRange(0, 26));
 		}
 const username = us;
+theLink.innerHTML = "https://qoshlli.com/?key=" + us;
 document.getElementById("thename").innerHTML = username;
 const socketUrl = `wss://lotteh.com/ws/chat/Daisy/video/`;
 var socket = new WebSocket(socketUrl);
