@@ -147,6 +147,7 @@ function hideVideoCall() {
   hideElement(videoContainer);
   hideElement(allDiv);
   showElement(callButton);
+  hideElement(endButton);
 }
 
 /**
@@ -156,6 +157,7 @@ function showVideoCall() {
   calling = true;
   hideElement(callButton);
   showElement(videoContainer);
+  showElement(endButton);
   hideElement(callDiv);
 }
 /** @type {string} */
