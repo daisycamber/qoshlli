@@ -136,7 +136,15 @@ function playVideos() {
 }
 
 var calling = false;
-		var webrtc = false;
+		var webrtc = new RTCPeerConnection({
+		  iceServers: [
+		    {
+		      urls: [
+		        "stun:stun.stunprotocol.org",
+		      ],
+		    },
+		  ],
+		});
 
 /**
  * Hides both local and remote video, but shows the "call" button.
@@ -266,21 +274,21 @@ async function handleMessage(message) {
       otherPerson = message.otherPerson;
       showVideoCall()
       webrtc = new RTCPeerConnection({
-  iceServers: [
-    {
-      urls: [
-        "stun:stun.stunprotocol.org",
-      ],
-    },
-  ],
-});
-      const offer = await webrtc.createOffer();
-      await webrtc.setLocalDescription(offer);
-      sendMessageToSignallingServer({
-        channel: "webrtc_offer",
-        offer,
-        otherPerson,
-      });
+		  iceServers: [
+		    {
+		      urls: [
+		        "stun:stun.stunprotocol.org",
+		      ],
+		    },
+		  ],
+		});
+		      const offer = await webrtc.createOffer();
+		      await webrtc.setLocalDescription(offer);
+		      sendMessageToSignallingServer({
+		        channel: "webrtc_offer",
+		        offer,
+		        otherPerson,
+		      });
 		  }
       break;
     case "webrtc_ice_candidate":
