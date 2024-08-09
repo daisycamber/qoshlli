@@ -87,6 +87,7 @@
     </div>
 </div>
 </div>
+<button id="end-button" class="call-button">End call</button>
 <button class="btn btn-lg btn-outline-primary" id="please-interact">Join a meeting</button>
     <hr>
     <div style="display: flex; justify-content: space-around;"><div id="shareqrcode" style="border-style: solid; border-width: 15px; border-radius: 5px; border-color: #EEEEEE;"></div></div>
@@ -115,6 +116,7 @@ function showElement(element) {
 }
 
 const callButton = document.getElementById("call-button");
+const endButton = document.getElementById("end-button");
 const callDiv = document.getElementById("call-div");
 const allDiv = document.getElementById("all-div");
 const pleaseInteract = document.getElementById("please-interact");
@@ -134,12 +136,14 @@ function playVideos() {
 }
 
 var calling = false;
+		var webrtc;
 
 /**
  * Hides both local and remote video, but shows the "call" button.
  */
 function hideVideoCall() {
   calling = false;
+  if(webrtc) webrtc.close();
   hideElement(videoContainer);
   hideElement(allDiv);
   showElement(callButton);
@@ -292,7 +296,7 @@ async function handleMessage(message) {
       break;
   }
 }
-const webrtc = new RTCPeerConnection({
+webrtc = new RTCPeerConnection({
   iceServers: [
     {
       urls: [
