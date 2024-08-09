@@ -326,7 +326,19 @@ async function handleMessage(message) {
       break;
   }
 }
-webrtc.addEventListener("icecandidate", (event) => {
+
+document.addEventListener("click", async () => {
+  if(!videoStarted) {
+	  webrtc = new RTCPeerConnection({
+		  iceServers: [
+		    {
+		      urls: [
+		        "stun:stun.stunprotocol.org",
+		      ],
+		    },
+		  ],
+		});
+	  webrtc.addEventListener("icecandidate", (event) => {
   if (!event.candidate) {
     return;
   }
@@ -343,18 +355,6 @@ webrtc.addEventListener("track", (event) => {
   remoteVideo.play();
   playVideos();
 });
-
-document.addEventListener("click", async () => {
-  if(!videoStarted) {
-	  webrtc = new RTCPeerConnection({
-		  iceServers: [
-		    {
-		      urls: [
-		        "stun:stun.stunprotocol.org",
-		      ],
-		    },
-		  ],
-		});
 	  hideElement(pleaseInteract);
 	  showElement(allDiv);
 	  navigator
