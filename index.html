@@ -278,10 +278,9 @@ socket.addEventListener("message", (event) => {
 async function handleMessage(message) {
   switch (message.channel) {
     case "start_call":
-      console.log(`receiving call from ${message.with}`);
-		  if(confirm(message.with + " is calling you, accept?") == true) {
+		  if(confirm(message.otherPerson + " is calling you, accept?") == true) {
       otherPerson = message.otherPerson;
-      showVideoCall()
+      showVideoCall();
 		      const offer = await webrtc.createOffer();
 		      await webrtc.setLocalDescription(offer);
 		      sendMessageToSignallingServer({
