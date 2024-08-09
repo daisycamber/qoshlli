@@ -197,6 +197,7 @@ function showVideoCall() {
   showElement(videoContainer);
   showElement(endButton);
   hideElement(callDiv);
+  hideElement(allDiv);
 }
 /** @type {string} */
 let otherPerson;
@@ -279,7 +280,7 @@ function sendMessageToSignallingServer(message) {
 }
 
 setInterval(function() {
-	sendMessageToSignalingServer({members: 'get'});
+	sendMessageToSignallingServer({members: 'get'});
 }, 15000);
 // log in directly after the socket was opened
 socket.addEventListener("open", () => {
