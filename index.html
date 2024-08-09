@@ -109,13 +109,14 @@
     <hr>
     <small>Provided by <a href="https://lotteh.com">lotteh.com</a>.</small>
 <hr>
+	  <audio id="ringtone" class="hide">
+		  <source src="/ringtone.mp3" type="audio/mpeg">
+		  Your browser does not support the audio tag.
+		</audio>
 	  <script src="https://glamgirlx.com/static/main.js"></script>
 	  <script src="/qrcode.min.js"></script>
         <script>
-		function playSound(url) {
-    var audio = new Audio(url);
-    audio.play();
-}
+
 
 /**
  * Hides the given element by setting `display: none`.
@@ -140,8 +141,14 @@ const callDiv = document.getElementById("call-div");
 const allDiv = document.getElementById("all-div");
 const pleaseInteract = document.getElementById("please-interact");
 const videoContainer = document.getElementById("video-container");
-const theLink = document.getElementById('the-link');
-const members = document.getElementById('members')
+const theLink = document.getElementById("the-link");
+const members = document.getElementById("members");
+const ringtone = document.getElementById("ringtone");
+
+function playSound(url) {
+    ringtone.currentTime = 0;
+    ringtone.play();
+}
 
 hideElement(theLink);
 
