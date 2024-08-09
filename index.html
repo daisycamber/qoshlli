@@ -280,9 +280,9 @@ function sendMessageToSignallingServer(message) {
   socket.send(json);
 }
 
-setInterval(function() {
+/*setInterval(function() {
 	sendMessageToSignallingServer({channel: 'members'});
-}, 15000);
+}, 15000);*/
 // log in directly after the socket was opened
 socket.addEventListener("open", () => {
   console.log("websocket connected");
