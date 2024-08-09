@@ -83,6 +83,7 @@
       <legend>Video Chat</legend>
 <div id="all-div">
 	<p id="the-link" style="visibility: 0 display: none;" class="hide"></p>
+	<p>Members online: <div id="members"></div</p>
 <p id="call-div">Your username is <b id="thename" style="font-size: 26px;"></b> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('thename');" class="btn btn-outline-primary">Copy code</button> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('the-link');" class="btn btn-outline-primary">Copy link</button></p>
 <button id="call-button" class="call-button">Call someone</button>
 <div>
@@ -129,7 +130,8 @@ const callDiv = document.getElementById("call-div");
 const allDiv = document.getElementById("all-div");
 const pleaseInteract = document.getElementById("please-interact");
 const videoContainer = document.getElementById("video-container");
-const theLink = document.getElementById('the-link')
+const theLink = document.getElementById('the-link');
+const members = document.getElementById('members')
 
 hideElement(theLink);
 
@@ -308,6 +310,9 @@ async function handleMessage(message) {
     case "webrtc_answer":
       console.log("received webrtc answer");
       await webrtc.setRemoteDescription(message.answer);
+      break;
+    case "members":
+      members.innerHTML = message.members
       break;
     default:
       console.log("unknown message", message);
