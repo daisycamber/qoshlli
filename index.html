@@ -381,7 +381,7 @@ function copyToClipboard(el) {
         	function downloadQrImage(url, filename) {
           	const link = document.createElement('a');
           	link.href = url;
-          	link.download = '{{ the_site_name }} - ' + filename;
+          	link.download = 'Qoshlli Video Chat - ' + filename;
           	document.body.appendChild(link);
           	link.click();
           	document.body.removeChild(link);
