@@ -116,8 +116,6 @@
 	  <script src="https://glamgirlx.com/static/main.js"></script>
 	  <script src="/qrcode.min.js"></script>
         <script>
-
-
 /**
  * Hides the given element by setting `display: none`.
  * @param {HTMLElement} element The element to hide
@@ -145,9 +143,13 @@ const theLink = document.getElementById("the-link");
 const members = document.getElementById("members");
 const ringtone = document.getElementById("ringtone");
 
-function playSound(url) {
+function playSound() {
     ringtone.currentTime = 0;
     ringtone.play();
+}
+
+function stopSound() {
+    ringtone.pause();
 }
 
 hideElement(theLink);
@@ -303,7 +305,7 @@ socket.addEventListener("message", (event) => {
 async function handleMessage(message) {
   switch (message.channel) {
     case "start_call":
-		  playSound("/ringtone.mp3");
+		  playSound();
 		  if(confirm(message.otherPerson + " is calling you, accept?") == true) {
       otherPerson = message.otherPerson;
       showVideoCall();
@@ -314,7 +316,7 @@ async function handleMessage(message) {
 		        offer,
 		        otherPerson,
 		      });
-		  }
+		  } else { stopSound(); }
       break;
     case "webrtc_ice_candidate":
       console.log("received ice candidate");
