@@ -255,10 +255,8 @@ socket.addEventListener("close", () => {
  * @param {WebSocketMessage} message The message to send
  */
 function sendMessageToSignallingServer(message) {
-	if(calling) {
   const json = JSON.stringify(message);
   socket.send(json);
-	}
 }
 // log in directly after the socket was opened
 socket.addEventListener("open", () => {
