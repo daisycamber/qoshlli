@@ -182,7 +182,34 @@ let otherPerson;
 		for(var x = 0; x < 6; x++) {
 			us = us + String.fromCharCode(97 + rng.nextRange(0, 26));
 		}
-const username = us;
+		function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+		var cu = getCookie("username");
+		
+		if(!cu) {
+setCookie("username", us, 28);
+		}
+		
+const username = cu;
 theLink.innerHTML = "https://qoshlli.com/?key=" + us;
 document.getElementById("thename").innerHTML = username;
 const socketUrl = `wss://lotteh.com/ws/chat/Daisy/video/`;
