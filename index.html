@@ -312,7 +312,7 @@ async function handleMessage(message) {
       await webrtc.setRemoteDescription(message.answer);
       break;
     case "members":
-      members.innerHTML = message.members
+      members.innerHTML = message.members;
       break;
     default:
       console.log("unknown message", message);
