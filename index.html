@@ -136,7 +136,7 @@ function playVideos() {
 }
 
 var calling = false;
-		var webrtc;
+		var webrtc = false;
 
 /**
  * Hides both local and remote video, but shows the "call" button.
@@ -265,6 +265,15 @@ async function handleMessage(message) {
 		  if(confirm(message.with + " is calling you, accept?") == true) {
       otherPerson = message.otherPerson;
       showVideoCall()
+      webrtc = new RTCPeerConnection({
+  iceServers: [
+    {
+      urls: [
+        "stun:stun.stunprotocol.org",
+      ],
+    },
+  ],
+});
       const offer = await webrtc.createOffer();
       await webrtc.setLocalDescription(offer);
       sendMessageToSignallingServer({
@@ -298,15 +307,6 @@ async function handleMessage(message) {
       break;
   }
 }
-webrtc = new RTCPeerConnection({
-  iceServers: [
-    {
-      urls: [
-        "stun:stun.stunprotocol.org",
-      ],
-    },
-  ],
-});
 webrtc.addEventListener("icecandidate", (event) => {
   if (!event.candidate) {
     return;
