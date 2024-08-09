@@ -144,27 +144,30 @@ function playVideos() {
 }
 
 var calling = false;
-		var webrtc = new RTCPeerConnection({
-		  iceServers: [
-		    {
-		      urls: [
-		        "stun:stun.stunprotocol.org",
-		      ],
-		    },
-		  ],
-		});
+
+		var callStarted = false;
+var videoStarted = false;
+		var webrtc;
 
 /**
  * Hides both local and remote video, but shows the "call" button.
  */
 function hideVideoCall() {
   if(webrtc && calling) webrtc.close();
+  videoStarted = false;
+  callStarted = false;
   calling = false;
   hideElement(videoContainer);
   hideElement(allDiv);
   showElement(callButton);
   hideElement(endButton);
 }
+
+		endButton.addEventListener("click",  function() {
+			hideVideoCall();
+				showElement(pleaseInteract);
+	  hideElement(allDiv);
+		});
 
 /**
  * Shows both local and remote video, and hides the "call" button.
@@ -340,10 +343,18 @@ webrtc.addEventListener("track", (event) => {
   remoteVideo.play();
   playVideos();
 });
-var callStarted = false;
-var videoStarted = false;
+
 document.addEventListener("click", async () => {
   if(!videoStarted) {
+	  webrtc = new RTCPeerConnection({
+		  iceServers: [
+		    {
+		      urls: [
+		        "stun:stun.stunprotocol.org",
+		      ],
+		    },
+		  ],
+		});
 	  hideElement(pleaseInteract);
 	  showElement(allDiv);
 	  navigator
