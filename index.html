@@ -277,6 +277,10 @@ function sendMessageToSignallingServer(message) {
   const json = JSON.stringify(message);
   socket.send(json);
 }
+
+setInterval(function() {
+	sendMessageToSignalingServer({members: 'get'});
+}, 15000);
 // log in directly after the socket was opened
 socket.addEventListener("open", () => {
   console.log("websocket connected");
