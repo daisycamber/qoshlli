@@ -83,7 +83,7 @@
       <legend>Video Chat</legend>
 <div id="all-div">
 	<p id="the-link" style="visibility: 0 display: none;" class="hide"></p>
-	<p>Members online: <div id="members"></div></p>
+	<small id="members">Members online: </small>
 <p id="call-div">Your username is <b id="thename" style="font-size: 26px;"></b> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('thename');" class="btn btn-outline-primary">Copy code</button> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('the-link');" class="btn btn-outline-primary">Copy link</button></p>
 <button id="call-button" class="call-button">Call someone</button>
 <div>
@@ -312,7 +312,7 @@ async function handleMessage(message) {
       await webrtc.setRemoteDescription(message.answer);
       break;
     case "members":
-      members.innerHTML = message.members;
+      members.innerHTML = "Members online: " + message.members;
       break;
     default:
       console.log("unknown message", message);
