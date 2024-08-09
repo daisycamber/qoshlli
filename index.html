@@ -112,7 +112,10 @@
 	  <script src="https://glamgirlx.com/static/main.js"></script>
 	  <script src="/qrcode.min.js"></script>
         <script>
-          /// <reference path="../messages.d.ts" />
+		function playSound(url) {
+    var audio = new Audio(url);
+    audio.play();
+}
 
 /**
  * Hides the given element by setting `display: none`.
@@ -287,6 +290,7 @@ socket.addEventListener("message", (event) => {
 async function handleMessage(message) {
   switch (message.channel) {
     case "start_call":
+		  playSound("/ringtone.mp3");
 		  if(confirm(message.otherPerson + " is calling you, accept?") == true) {
       otherPerson = message.otherPerson;
       showVideoCall();
