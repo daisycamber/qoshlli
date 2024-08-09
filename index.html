@@ -133,10 +133,13 @@ function playVideos() {
   } catch { }*/
 }
 
+var calling = false;
+
 /**
  * Hides both local and remote video, but shows the "call" button.
  */
 function hideVideoCall() {
+  calling = false;
   hideElement(videoContainer);
   hideElement(allDiv);
   showElement(callButton);
@@ -146,6 +149,7 @@ function hideVideoCall() {
  * Shows both local and remote video, and hides the "call" button.
  */
 function showVideoCall() {
+  calling = true;
   hideElement(callButton);
   showElement(videoContainer);
   hideElement(callDiv);
@@ -226,8 +230,10 @@ socket.addEventListener("close", () => {
  * @param {WebSocketMessage} message The message to send
  */
 function sendMessageToSignallingServer(message) {
+	if(calling) {
   const json = JSON.stringify(message);
   socket.send(json);
+	}
 }
 // log in directly after the socket was opened
 socket.addEventListener("open", () => {
@@ -250,6 +256,7 @@ async function handleMessage(message) {
   switch (message.channel) {
     case "start_call":
       console.log(`receiving call from ${message.with}`);
+		  if(confirm(message.with + " is calling you, accept?") == true) {
       otherPerson = message.otherPerson;
       showVideoCall()
       const offer = await webrtc.createOffer();
@@ -259,6 +266,7 @@ async function handleMessage(message) {
         offer,
         otherPerson,
       });
+		  }
       break;
     case "webrtc_ice_candidate":
       console.log("received ice candidate");
