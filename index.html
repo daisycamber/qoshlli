@@ -22,6 +22,13 @@
           display: block;
           margin: 0 auto;
         }
+	    .hide {
+    opacity: 0;
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
+}
+
 
         .call-button {
           padding: 1rem 2rem;
@@ -75,11 +82,11 @@
   <body>
       <legend>Video Chat</legend>
 <div id="all-div">
-	<p id="the-link" style="visibility: 0 display: none;"></p>
+	<p id="the-link" style="visibility: 0 display: none;" class="hide"></p>
 <p id="call-div">Your username is <b id="thename" style="font-size: 26px;"></b> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('thename');" class="btn btn-outline-primary">Copy code</button> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('the-link');" class="btn btn-outline-primary">Copy link</button></p>
 <button id="call-button" class="call-button">Call someone</button>
 <div>
-    <div id="video-container" class="centered">
+    <div id="video-container" class="centered hide">
       <div id="videos">
         <video id="remote-video" autoplay="autoplay"></video>
         <iframe id="local-video" src="https://qoshlli.com/mirror.html"></iframe>
@@ -87,7 +94,7 @@
     </div>
 </div>
 </div>
-<button id="end-button" class="call-button">End call</button>
+<button id="end-button" class="call-button hide">End call</button>
 <button class="btn btn-lg btn-outline-primary" id="please-interact">Join a meeting</button>
     <hr>
     <div style="display: flex; justify-content: space-around;"><div id="shareqrcode" style="border-style: solid; border-width: 15px; border-radius: 5px; border-color: #EEEEEE;"></div></div>
@@ -113,6 +120,7 @@ function hideElement(element) {
  */
 function showElement(element) {
   element.style.display = "";
+  element.classList.remove("hide");
 }
 
 const callButton = document.getElementById("call-button");
