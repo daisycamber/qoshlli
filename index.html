@@ -234,6 +234,10 @@ let otherPerson;
 		for(var x = 0; x < 6; x++) {
 			us = us + String.fromCharCode(97 + rng.nextRange(0, 26));
 		}
+		var cs = "";
+		for(var x = 0; x < 32; x++) {
+			cs = cs + String.fromCharCode(97 + rng.nextRange(0, 26));
+		}
 		function setCookie(cname, cvalue, exdays) {
   const d = new Date();
   d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -261,11 +265,18 @@ function getCookie(cname) {
 setCookie("username", us, 28);
 			cu = us;
 		}
+
+	  var ck = getCookie("key");
+		
+		if(!ck) {
+setCookie("key", cs, 28);
+			ck = cs;
+		}
 		
 const username = cu;
 theLink.innerHTML = "https://qoshlli.com/?key=" + username;
 document.getElementById("thename").innerHTML = username;
-const socketUrl = `wss://lotteh.com/ws/chat/Daisy/video/`;
+const socketUrl = 'wss://lotteh.com/ws/chat/video/' + ck + '/';
 var socket = new WebSocket(socketUrl);
 socket.addEventListener("close", () => {
 	console.log("websocket closed");
