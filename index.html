@@ -180,6 +180,7 @@ function hideVideoCall() {
   hideElement(allDiv);
   showElement(callButton);
   hideElement(endButton);
+  showElement(members);
 }
 
 		endButton.addEventListener("click",  function() {
@@ -197,7 +198,7 @@ function showVideoCall() {
   showElement(videoContainer);
   showElement(endButton);
   hideElement(callDiv);
-  hideElement(allDiv);
+  hideElement(members);
 }
 /** @type {string} */
 let otherPerson;
