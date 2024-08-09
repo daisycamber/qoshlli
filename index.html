@@ -158,8 +158,8 @@ var calling = false;
  * Hides both local and remote video, but shows the "call" button.
  */
 function hideVideoCall() {
+  if(webrtc && calling) webrtc.close();
   calling = false;
-  if(webrtc) webrtc.close();
   hideElement(videoContainer);
   hideElement(allDiv);
   showElement(callButton);
