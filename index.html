@@ -281,7 +281,7 @@ function sendMessageToSignallingServer(message) {
 }
 
 setInterval(function() {
-	sendMessageToSignallingServer({members: 'get'});
+	sendMessageToSignallingServer({channel: 'members'});
 }, 15000);
 // log in directly after the socket was opened
 socket.addEventListener("open", () => {
