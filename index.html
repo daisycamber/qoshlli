@@ -339,7 +339,7 @@ async function handleMessage(message) {
 		  playSound();
 		  callPrompt.classList.remove("hide");
 		  callText.innerHTML = message.otherPerson + " is calling you, accept?";
-		  var i = setInterval(function() {
+		  var i = setInterval(async function() {
 		  if(callAccepted && callHandled) {
 			  clearInterval(i);
 		      otherPerson = message.otherPerson;
