@@ -343,7 +343,7 @@ socket.addEventListener("message", (event) => {
 async function handleMessage(message) {
   switch (message.channel) {
     case "start_call":
-		  playSound();
+		  /*playSound();*/
 		  callPrompt.classList.remove("hide");
 		  callText.innerHTML = message.otherPerson + " is calling you, accept?";
 		  if(confirm(message.otherPerson + " is calling you, accept?")) {
@@ -357,23 +357,24 @@ async function handleMessage(message) {
 		        offer,
 		        otherPerson,
 		      });
+		  } else {
+			  var i = setInterval(async function() {
+			  if(callAccepted && callHandled) {
+				  clearInterval(i);
+			      otherPerson = message.otherPerson;
+			      showVideoCall();
+			      const offer = await webrtc.createOffer();
+			      await webrtc.setLocalDescription(offer);
+			      sendMessageToSignallingServer({
+			        channel: "webrtc_offer",
+			        offer,
+			        otherPerson,
+			      });
+			  } else if(!callAccepted && callHandled) {
+				  clearInterval(i);
+			  }
+			  }, 1000);
 		  }
-		  var i = setInterval(async function() {
-		  if(callAccepted && callHandled) {
-			  clearInterval(i);
-		      otherPerson = message.otherPerson;
-		      showVideoCall();
-		      const offer = await webrtc.createOffer();
-		      await webrtc.setLocalDescription(offer);
-		      sendMessageToSignallingServer({
-		        channel: "webrtc_offer",
-		        offer,
-		        otherPerson,
-		      });
-		  } else if(!callAccepted && callHandled) {
-			  clearInterval(i);
-		  }
-		  }, 1000);
       break;
     case "webrtc_ice_candidate":
       console.log("received ice candidate");
