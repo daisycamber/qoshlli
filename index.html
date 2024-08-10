@@ -390,7 +390,6 @@ webrtc.addEventListener("track", (event) => {
 	  hideElement(pleaseInteract);
 	  showElement(allDiv);
 	  showElement(callDiv);
-	  try {
 	  navigator
 	    .mediaDevices
 	    .getUserMedia({ video: true, audio: { echoCancellation: true } })
@@ -399,10 +398,10 @@ webrtc.addEventListener("track", (event) => {
 	      for (const track of localStream.getTracks()) {
 	        webrtc.addTrack(track, localStream);
 	      }
-	    });
-	  } catch {
-             errorMessage.classList.remove("hide");
-	  }
+	    }).catch(function(err) {
+		    console.log("An error occurred: " + err);
+		    errorMessage.classList.remove('hide');
+		  });;
 	  videoStarted = true;
 	  } else if(!callStarted) {
 		  const urParams = new URLSearchParams(window.location.search);
