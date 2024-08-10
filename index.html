@@ -346,6 +346,18 @@ async function handleMessage(message) {
 		  playSound();
 		  callPrompt.classList.remove("hide");
 		  callText.innerHTML = message.otherPerson + " is calling you, accept?";
+		  if(confirm(message.otherPerson + " is calling you, accept?")) {
+			  acceptCall();
+		      otherPerson = message.otherPerson;
+		      showVideoCall();
+		      const offer = await webrtc.createOffer();
+		      await webrtc.setLocalDescription(offer);
+		      sendMessageToSignallingServer({
+		        channel: "webrtc_offer",
+		        offer,
+		        otherPerson,
+		      });
+		  }
 		  var i = setInterval(async function() {
 		  if(callAccepted && callHandled) {
 			  clearInterval(i);
