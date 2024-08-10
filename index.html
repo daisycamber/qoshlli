@@ -400,7 +400,7 @@ webrtc.addEventListener("track", (event) => {
 	        webrtc.addTrack(track, localStream);
 	      }
 	    });
-	  } catch(exception) {
+	  } catch {
              errorMessage.classList.remove("hide");
 	  }
 	  videoStarted = true;
