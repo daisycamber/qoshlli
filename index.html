@@ -389,6 +389,7 @@ async function handleMessage(message) {
 
 document.addEventListener("click", async () => {
   if(!videoStarted) {
+	  if(!socket) {
 	  socket = new WebSocket(socketUrl);
 socket.addEventListener("close", () => {
 	console.log("websocket closed");
@@ -408,6 +409,7 @@ socket.addEventListener("message", (event) => {
   handleMessage(message);
   playVideos();
 });
+	  }
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
 		    {
