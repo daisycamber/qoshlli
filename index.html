@@ -397,10 +397,10 @@ socket.addEventListener("message", (event) => {
   handleMessage(message);
   playVideos();
 });
-		  clearInterval(int);
-		  int = setInterval(function() {
-	sendMessageToSignallingServer({channel: 'members'});
-}, 15000);
+		clearInterval(inter);
+		inter = setInterval(function() {
+			sendMessageToSignallingServer({channel: 'members'});
+		}, 15000);
 	  }
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
