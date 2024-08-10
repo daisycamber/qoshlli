@@ -125,8 +125,6 @@
 	  <script src="https://glamgirlx.com/static/main.js"></script>
 	  <script src="/qrcode.min.js"></script>
         <script>
-
-	
 /**
  * Hides the given element by setting `display: none`.
  * @param {HTMLElement} element The element to hide
@@ -134,7 +132,6 @@
 function hideElement(element) {
   element.style.display = "none";
 }
-
 /**
  * Shows the given element by resetting the display CSS property.
  * @param {HTMLElement} element The element to show
@@ -143,7 +140,6 @@ function showElement(element) {
   element.style.display = "";
   element.classList.remove("hide");
 }
-
 const callButton = document.getElementById("call-button");
 const endButton = document.getElementById("end-button");
 const callDiv = document.getElementById("call-div");
@@ -156,7 +152,6 @@ const ringtone = document.getElementById("ringtone");
 const errorMessage = document.getElementById("error-message");
 const callPrompt = document.getElementById("accept-div");
 		const callText = document.getElementById("accept-text");
-
 			var callAccepted = false;
 		var callHandled = false;
 		function acceptCall(){
@@ -287,19 +282,15 @@ function getCookie(cname) {
   return "";
 }
 		var cu = getCookie("username");
-		
 		if(!cu) {
 setCookie("username", us, 28);
 			cu = us;
 		}
-
 	  var ck = getCookie("key");
-		
 		if(!ck) {
 setCookie("key", cs, 28);
 			ck = cs;
 		}
-		
 const username = cu;
 theLink.innerHTML = "https://qoshlli.com/?key=" + username;
 document.getElementById("thename").innerHTML = username;
@@ -313,12 +304,10 @@ function sendMessageToSignallingServer(message) {
   const json = JSON.stringify(message);
   socket.send(json);
 }
-
 /*setInterval(function() {
 	sendMessageToSignallingServer({channel: 'members'});
 }, 15000);*/
 // log in directly after the socket was opened
-
 /**
  * Processes the incoming message.
  * @param {WebSocketMessage} message The incoming message
@@ -326,7 +315,7 @@ function sendMessageToSignallingServer(message) {
 async function handleMessage(message) {
   switch (message.channel) {
     case "start_call":
-		  /*playSound();*/
+		  playSound();
 		  callPrompt.classList.remove("hide");
 		  callText.innerHTML = message.otherPerson + " is calling you, accept?";
 		  if(confirm(message.otherPerson + " is calling you, accept?")) {
@@ -386,7 +375,6 @@ async function handleMessage(message) {
       break;
   }
 }
-
 document.addEventListener("click", async () => {
   if(!videoStarted) {
 	  if(!socket) {
