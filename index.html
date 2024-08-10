@@ -93,7 +93,8 @@
 	<small id="members">Members online: </small>
 	<hr>
 <p id="call-div">Your username is <b id="thename" style="font-size: 26px;"></b> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('thename');" class="btn btn-outline-primary">Copy code</button> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('the-link');" class="btn btn-outline-primary">Copy link</button></p>
-<button id="call-button" class="call-button">Call someone</button>
+<div id="accept-div" class="hide"><div id="accept-text"></div><button onclick="denyCall();" style="color: red;">Deny</button><button onclick="acceptCall();" style="color: green;">Accept</button></div>
+	<button id="call-button" class="call-button">Call someone</button>
 <div>
     <div id="video-container" class="centered hide">
       <div id="videos">
@@ -117,6 +118,8 @@
 	  <script src="https://glamgirlx.com/static/main.js"></script>
 	  <script src="/qrcode.min.js"></script>
         <script>
+
+	
 /**
  * Hides the given element by setting `display: none`.
  * @param {HTMLElement} element The element to hide
@@ -144,6 +147,21 @@ const theLink = document.getElementById("the-link");
 const members = document.getElementById("members");
 const ringtone = document.getElementById("ringtone");
 const errorMessage = document.getElementById("error-message");
+const callPrompt = document.getElementById("accept-div");
+		const callText = document.getElementById("accept-text");
+
+			var callAccepted = false;
+		var callHandled = false;
+		function acceptCall(){
+			callAccepted = true;
+			callHandled = true;
+			callPrompt.classList.add("hide");
+		}
+		function denyCall(){
+			callAccepted = false;
+			callHandled = true;
+			callPrompt.classList.add("hide");
+		}
 
 function playSound() {
     ringtone.currentTime = 0;
@@ -319,9 +337,13 @@ async function handleMessage(message) {
   switch (message.channel) {
     case "start_call":
 		  playSound();
-		  if(confirm(message.otherPerson + " is calling you, accept?") == true) {
-      otherPerson = message.otherPerson;
-      showVideoCall();
+		  callPrompt.classList.remove("hide");
+		  callText.innerHTML = message.otherPerson + " is calling you, accept?";
+		  var i = setInterval(function() {
+		  if(callAccepted && callHandled) {
+			  clearInterval(i);
+		      otherPerson = message.otherPerson;
+		      showVideoCall();
 		      const offer = await webrtc.createOffer();
 		      await webrtc.setLocalDescription(offer);
 		      sendMessageToSignallingServer({
@@ -329,7 +351,10 @@ async function handleMessage(message) {
 		        offer,
 		        otherPerson,
 		      });
-		  } else { stopSound(); }
+		  } else if(!callAccepted && callHandled) {
+			  clearInterval(i);
+		  }
+		  }, 1000);
       break;
     case "webrtc_ice_candidate":
       console.log("received ice candidate");
