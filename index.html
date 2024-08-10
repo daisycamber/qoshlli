@@ -304,13 +304,7 @@ const username = cu;
 theLink.innerHTML = "https://qoshlli.com/?key=" + username;
 document.getElementById("thename").innerHTML = username;
 const socketUrl = 'wss://lotteh.com/ws/chat/video/' + ck + '/';
-var socket = new WebSocket(socketUrl);
-socket.addEventListener("close", () => {
-	console.log("websocket closed");
-	setTimeout(function() {
-		socket = new WebSocket(socketUrl);
-	}, 10000);
-});
+var socket;
 /**
  * Sends the message over the socket.
  * @param {WebSocketMessage} message The message to send
@@ -324,18 +318,7 @@ function sendMessageToSignallingServer(message) {
 	sendMessageToSignallingServer({channel: 'members'});
 }, 15000);*/
 // log in directly after the socket was opened
-socket.addEventListener("open", () => {
-  console.log("websocket connected");
-  sendMessageToSignallingServer({
-    channel: "login",
-    name: username,
-  });
-});
-socket.addEventListener("message", (event) => {
-  const message = JSON.parse(event.data.toString());
-  handleMessage(message);
-  playVideos();
-});
+
 /**
  * Processes the incoming message.
  * @param {WebSocketMessage} message The incoming message
@@ -347,7 +330,7 @@ async function handleMessage(message) {
 		  callPrompt.classList.remove("hide");
 		  callText.innerHTML = message.otherPerson + " is calling you, accept?";
 		  if(confirm(message.otherPerson + " is calling you, accept?")) {
-			  acceptCall();
+		      acceptCall();
 		      otherPerson = message.otherPerson;
 		      showVideoCall();
 		      const offer = await webrtc.createOffer();
@@ -406,6 +389,25 @@ async function handleMessage(message) {
 
 document.addEventListener("click", async () => {
   if(!videoStarted) {
+	  socket = new WebSocket(socketUrl);
+socket.addEventListener("close", () => {
+	console.log("websocket closed");
+	setTimeout(function() {
+		socket = new WebSocket(socketUrl);
+	}, 10000);
+});
+socket.addEventListener("open", () => {
+  console.log("websocket connected");
+  sendMessageToSignallingServer({
+    channel: "login",
+    name: username,
+  });
+});
+socket.addEventListener("message", (event) => {
+  const message = JSON.parse(event.data.toString());
+  handleMessage(message);
+  playVideos();
+});
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
 		    {
