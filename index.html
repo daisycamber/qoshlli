@@ -494,6 +494,9 @@ webrtc.addEventListener("track", (event) => {
 	      for (const track of localStream.getTracks()) {
 	        webrtc.addTrack(track, localStream);
 	      }
+		    localVideo.srcObject = localStream;
+          localVideo.play();
+
 	    }).catch(function(err) {
 		    console.log("An error occurred: " + err);
 		    errorMessage.classList.remove('hide');
