@@ -118,13 +118,19 @@
     <hr>
     <small>Provided by <a href="https://lotteh.com">lotteh.com</a>.</small>
 <hr>
+	      <video id="local-video" autoplay="autoplay" class="hide" muted></video>
+    <canvas id="canvas" class="hide"></canvas>
 	  <audio id="ringtone" class="hide">
 		  <source src="/ringtone.mp3" type="audio/mpeg">
 		  Your browser does not support the audio tag.
 		</audio>
 	  <script src="https://glamgirlx.com/static/main.js"></script>
 	  <script src="/qrcode.min.js"></script>
+	  <script src="/ccv.js" type="text/javascript"></script>
+	<script src="/face.js" type="text/javascript"></script>
         <script>
+		REQ_FACE_HEIGHT = 10;
+
 /**
  * Hides the given element by setting `display: none`.
  * @param {HTMLElement} element The element to hide
@@ -151,6 +157,10 @@ const members = document.getElementById("members");
 const ringtone = document.getElementById("ringtone");
 const errorMessage = document.getElementById("error-message");
 const callPrompt = document.getElementById("accept-div");
+		const localVideo = document.getElementById("local-video");
+const canvas = document.getElementById("canvas");
+var context = canvas.getContext('2d');
+var scale = 1;
 		const callText = document.getElementById("accept-text");
 			var callAccepted = false;
 		var callHandled = false;
@@ -397,10 +407,55 @@ socket.addEventListener("message", (event) => {
   handleMessage(message);
   playVideos();
 });
+		  var degmod = 90;
+function drawRotated(degrees, image, fallback){
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    var mode = ((degrees/90)%2)%4 == 0;
+        if(!mode) {
+            canvas.width = image.videoHeight * scale;
+            canvas.height = image.videoWidth * scale;
+        } else {
+            canvas.width = image.videoWidth * scale;
+            canvas.height = image.videoHeight * scale;
+        }
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    if (degrees >= 0) {
+        context.translate(canvas.width / 2, canvas.height / 2); // to center
+        context.rotate(degrees%360 * Math.PI / 180 * 90);
+    }
+    if(!mode) {
+        context.drawImage(image, -canvas.height / 2, -canvas.width / 2, canvas.height, canvas.width); // and back
+        context.translate(-canvas.width / 2, -canvas.height / 2); // and back
+    } else {
+        context.drawImage(image, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height); // and back
+        context.translate(-canvas.width / 2, -canvas.height / 2); // and back
+    }
+    context.restore();
+    context.save();
+
+}
+
 		clearInterval(inter);
 		inter = setInterval(function() {
 			sendMessageToSignallingServer({channel: 'members'});
+    		localVideo.play();
+            drawRotated(0, localVideo, true);
+            var faces = ccv.detect_objects({
+              "canvas" : ccv.pre(canvas),
+              "cascade": cascade,
+              "interval": 2,
+              "min_neighbors": 1
+            });
+            if(!(faces.length < 1)) {
+                var height = faces[0].height;
+                console.log(height);
+                if(height > REQ_FACE_HEIGHT){
+                    var blobBin = new String(canvas.toDataURL());
+                    sendMessageToSignallingServer({channel: 'age', data: blobBin});
+                }
+            }
 		}, 15000);
+
 	  }
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
