@@ -393,6 +393,7 @@ async function handleMessage(message) {
 		  callPrompt.classList.remove("hide");
 		  callText.innerHTML = message.otherPerson + " is calling you, accept?";
 		  if(confirm(message.otherPerson + " is calling you, accept?")) {
+		      ringtone.pause();
 		      acceptCall();
 		      otherPerson = message.otherPerson;
 		      showVideoCall();
