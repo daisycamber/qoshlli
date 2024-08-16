@@ -630,6 +630,7 @@ updateUsername.addEventListener("click", async() => {
         callStarted = false;
         socket.close();
         socket = null;
+	window.location.reload();
     }
 });
 function copyToClipboard(el) {
