@@ -626,6 +626,10 @@ updateUsername.addEventListener("click", async() => {
         document.getElementById("thename").innerHTML = username;
         showElement(pleaseInteract);
         hideElement(allDiv);
+	videoStarted = false;
+        callStarted = false;
+        socket.close();
+        socket = null;
     }
 });
 function copyToClipboard(el) {
