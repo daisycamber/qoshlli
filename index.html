@@ -145,7 +145,7 @@
     </div>
 </div>
 </div>
-<button id="end-button" class="call-button hide">End call</button>
+<div style="display: flex; justify-content: space-around"><button id="end-button" class="call-button hide">End call</button><button id="mute" class="btn hide">Mute</button></div>
 <button class="btn btn-lg btn-outline-primary" id="please-interact">Join a meeting</button>
     <hr>
     <small>Provided by <a href="https://lotteh.com">lotteh.com</a>.</small>
@@ -228,6 +228,7 @@ const errorMessage = document.getElementById("error-message");
 const callPrompt = document.getElementById("accept-div");
 const localVideo = document.getElementById("local-video");
 const updateUsername = document.getElementById("update-username");
+const muteButton = document.getElementById("mute");
 const canvas = document.getElementById("canvas");
 var context = canvas.getContext('2d');
 var scale = 1;
@@ -266,6 +267,16 @@ function playVideos() {
   } catch { }*/
 }
 
+		muteButton.addEventListener("click", function(event) {
+			remoteVideo.muted = !remoteVideo.muted;
+			if(remoteVideo.muted) {
+				muteButton.innerHTML = 'Unmute';
+			} else {
+				muteButton.innerHTML = 'Mute';
+
+			}
+		});
+
 var calling = false;
 
 		var callStarted = false;
@@ -284,6 +295,7 @@ function hideVideoCall() {
   hideElement(allDiv);
   showElement(callButton);
   hideElement(endButton);
+	hideElement(muteButton);
   showElement(members);
 }
 
@@ -301,6 +313,7 @@ function showVideoCall() {
   hideElement(callButton);
   showElement(videoContainer);
   showElement(endButton);
+  showElement(muteButton);
   hideElement(callDiv);
   hideElement(members);
 }
