@@ -16,12 +16,12 @@ var URLS = [
   `${GHPATH}/index.html`,
   `${GHPATH}/index/styles.css`,
   `${GHPATH}/js/app.js`,
-  `${GHPATH}/qrcode.js`
-  `${GHPATH}/ccv.js`
-  `${GHPATH}/face.js`
-  `${GHPATH}/mirror.html`
-  `${GHPATH}/ringtone.mp3`
-  `${GHPATH}/VK_logo.svg.png`
-  `${GHPATH}/pinterest.svg`
+  `${GHPATH}/qrcode.js`,
+  `${GHPATH}/ccv.js`,
+  `${GHPATH}/face.js`,
+  `${GHPATH}/mirror.html`,
+  `${GHPATH}/ringtone.mp3`,
+  `${GHPATH}/VK_logo.svg.png`,
+  `${GHPATH}/pinterest.svg`,
   `${GHPATH}/tumblr-logo.svg`
 ]
