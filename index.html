@@ -691,5 +691,13 @@ function copyToClipboard(el) {
 	        },
 	});
     </script>
+	  <script>
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register (
+          '/sw.js',
+          {scope: '/'}
+        )
+      }
+  </script>
   </body>
 </html>
