@@ -569,10 +569,6 @@ webrtc.addEventListener("track", (event) => {
   remoteVideo.play();
   playVideos();
 });
-sendMessageToSignallingServer({
-    channel: "login",
-    name: username,
-  });
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
 		    {
