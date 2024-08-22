@@ -1,789 +1,819 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Video Chat - Qoshlli</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="Charlotte Grace Harper">
-    <meta name="description" content="Video chat with you friends, family, coworkers and classroom.">
-	  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="/site.webmanifest">
-	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-	<meta name="msapplication-TileColor" content="#da532c">
-	<meta name="theme-color" content="#ffffff">
-    <link rel="canonical" href="https://qoshlli.com">
-    <style type="text/css">
-        * {
-          box-sizing: border-box;
-        }
-
-        body {
-          margin: 20 !important;
-          font-size: 24px !important;
-        }
-
-        .centered {
-          display: block;
-          margin: 0 auto;
-        }
-	    .hide {
-    opacity: 0;
-    display: none;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-
-        .call-button {
-          padding: 1rem 2rem;
-          border: none;
-          border-radius: 3px;
-          cursor: pointer;
-          color: white;
-          background-color: black;
-          box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-	    .btn {
-          padding: 1rem 2rem;
-          border: none;
-          border-radius: 3px;
-          cursor: pointer;
-          box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-	    	    .btn-light {
-          padding: 0.2rem 0.3rem !important;
-          border: 1px;
-          border-radius: 5px;
-          cursor: pointer;
-          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-              #please-interact {
-          padding: 1rem 2rem;
-          border: none;
-          border-radius: 3px;
-          cursor: pointer;
-          color: white;
-          background-color: black;
-          box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        #video-container {
-          width: 100%;
-          min-width: 300px;
-        }
-
-        #videos {
-          position: relative;
-        }
-
-        video {
-          background-color: black;
-          border-radius: 3px;
-          box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        #remote-video {
-          width: 100%;
-        }
-
-        #mirror-video {
-          position: absolute;
-          width: 25vw;
-          height: 25vw;
-          bottom: -30px;
-          right: 0px;
-        }
-	    .d-flex {
-			display: flex;
-	    }
-	    .justify-content-between {
-			justify-content: space-between;
-	    }
-
-	        .badge {
-          padding: 0.2rem 0.2rem;
-	  font-size: 16px !important;
-          border: none;
-          border-radius: 2px;
-          cursor: pointer;
-          box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
-        }
-
-	      .btn-xlarge {
-          padding: 18px 18px;
-          font-size: 30px;
-          line-height: normal;
-          -webkit-border-radius: 8px;
-             -moz-border-radius: 8px;
-                  border-radius: 8px;
-          }
-
+   <head>
+      <title>Video Chat - Qoshlli</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="author" content="Charlotte Grace Harper">
+      <meta name="description" content="Video chat with you friends, family, coworkers and classroom.">
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+      <link rel="manifest" href="/site.webmanifest">
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+      <meta name="msapplication-TileColor" content="#da532c">
+      <meta name="theme-color" content="#ffffff">
+      <link rel="canonical" href="https://qoshlli.com">
+      <style type="text/css">
+         * {
+         box-sizing: border-box;
+         }
+         body {
+         margin: 20 !important;
+         font-size: 24px !important;
+         }
+         .centered {
+         display: block;
+         margin: 0 auto;
+         }
+         .hide {
+         opacity: 0;
+         display: none;
+         visibility: hidden;
+         pointer-events: none;
+         }
+         .call-button {
+         padding: 1rem 2rem;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         color: white;
+         background-color: black;
+         box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+         }
+         .btn {
+         padding: 1rem 2rem;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+         }
+         .btn-light {
+         padding: 0.2rem 0.3rem !important;
+         border: 1px;
+         border-radius: 5px;
+         cursor: pointer;
+         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+         }
+         #please-interact {
+         padding: 1rem 2rem;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         color: white;
+         background-color: black;
+         box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+         }
+         #video-container {
+         width: 100%;
+         min-width: 300px;
+         }
+         #videos {
+         position: relative;
+         }
+         video {
+         background-color: black;
+         border-radius: 3px;
+         box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+         }
+         #remote-video {
+         width: 100%;
+         }
+         #mirror-video {
+         position: absolute;
+         width: 25vw;
+         height: 25vw;
+         bottom: -30px;
+         right: 0px;
+         }
+         .d-flex {
+         display: flex;
+         }
+         .justify-content-between {
+         justify-content: space-between;
+         }
+         .badge {
+         padding: 0.2rem 0.2rem;
+         font-size: 16px !important;
+         border: none;
+         border-radius: 2px;
+         cursor: pointer;
+         box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+         }
+         .btn-xlarge {
+         padding: 18px 18px;
+         font-size: 30px;
+         line-height: normal;
+         -webkit-border-radius: 8px;
+         -moz-border-radius: 8px;
+         border-radius: 8px;
+         }
       </style>
-
-  </head>
-  <body>
+   </head>
+   <body>
       <legend><b>Qoshlli</b> - Video Chat</legend>
-	  <p id="error-message" class="hide" style="text-color: red;">Please enable your camera and microphone in your web browser and device settings to continue. Reload to continue. <button onclick="window.location.reload();" title="Reload page" class="call-button">Reload</button></p>
-<div id="all-div">
-	<div id="accept-div" class="hide"><div id="accept-text"></div><button onclick="denyCall();" style="color: red;" class="btn">Deny</button><button onclick="acceptCall();" style="color: green;" class="btn">Accept</button><hr></div>
-	<p id="the-link" style="visibility: 0 display: none;" class="hide"></p>
-	<small id="members"></small>
-	<hr>
-<p id="call-div">Your username is <b id="thename" style="font-size: 26px;"></b> <button id="update-username" class="btn update-button">Update</button> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('thename');" class="btn btn-outline-primary">Copy code</button> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('the-link');" class="btn btn-outline-primary">Copy link</button></p>
-<button id="call-button" class="call-button">Call someone</button>
-<div>
-    <div id="video-container" class="centered hide">
-      <div id="videos">
-        <video id="remote-video" autoplay="autoplay"></video>
-        <iframe id="mirror-video" src="https://qoshlli.com/mirror.html"></iframe>
+      <p id="error-message" class="hide" style="text-color: red;">Please enable your camera and microphone in your web browser and device settings to continue. Reload to continue. <button onclick="window.location.reload();" title="Reload page" class="call-button">Reload</button></p>
+      <div id="all-div">
+         <div id="accept-div" class="hide">
+            <div id="accept-text"></div>
+            <button onclick="denyCall();" style="color: red;" class="btn">Deny</button><button onclick="acceptCall();" style="color: green;" class="btn">Accept</button>
+            <hr>
+         </div>
+         <p id="the-link" style="visibility: 0 display: none;" class="hide"></p>
+         <small id="members"></small>
+         <hr>
+         <p id="call-div">Your username is <b id="thename" style="font-size: 26px;"></b> <button id="update-username" class="btn update-button">Update</button> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('thename');" class="btn btn-outline-primary">Copy code</button> <button class="call-button" style="font-size: 20px;" onclick="copyToClipboard('the-link');" class="btn btn-outline-primary">Copy link</button></p>
+         <button id="call-button" class="call-button">Call someone</button>
+         <div>
+            <div id="video-container" class="centered hide">
+               <div id="videos">
+                  <video id="remote-video" autoplay="autoplay"></video>
+                  <iframe id="mirror-video" src="https://qoshlli.com/mirror.html"></iframe>
+               </div>
+            </div>
+         </div>
       </div>
-    </div>
-</div>
-</div>
-<div style="display: inline-block;"><button id="end-button" class="call-button hide">End call</button><button id="mute" class="btn hide">Mute</button></div>
-<button class="btn btn-lg btn-outline-primary" id="please-interact">Join a meeting</button>
-    <hr>
-    <small>Provided by <a href="https://lotteh.com">lotteh.com</a>.</small>
-	  <div style="margin:auto;" class="center col-md-6 p-3 rounded mb-3 bg-white">
-<div class="mb-2">
-<a title="Share on Facebook" target="_blank" class="btn btn-light btn-xlarge" href="https://www.facebook.com/dialog/feed?&app_id=845349032833671&link=https%3A%2F%2Fqoshlli.com%2F%3F&quote=Visit%20this%20link%20on%20Qoshlli%20&display=popup&hashtag=#lotteh&redirect_uri=https%3A%2F%2Fqoshlli.com" title="Share on Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16"  style="text-color: #4267B2 !important; color: #4267B2 !important;">
-  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg></a>
-<a title="Share on Twitter" target="_blank" class="btn btn-xlarge btn-light" href="https://twitter.com/intent/tweet/?text=Visit%20this%20link%20on%20Qoshlli%20-&url=https://qoshlli.com/?" title="Share on Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16" style="text-color: #1DA1F2 !important; color: #1DA1F2 !important;">
-  <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15"/>
-</svg></a>
-<a title="Share on Pinterest" target="_blank" class="btn btn-xlarge btn-light" href="https://www.pinterest.com/pin/create/button/?url=https://qoshlli.com/?" title="Share on Pinterest">
-	<img src="/pinterest.svg"  width="30" height="30"  alt="Share on Pinterest" style="filter: invert(21%) sepia(58%) saturate(4534%) hue-rotate(338deg) brightness(81%) contrast(128%);"></img>
-</a>
-<a title="Share on Linkedin" target="_blank" class="btn btn-xlarge btn-light" href="https://www.linkedin.com/shareArticle?mini=true&url=https://qoshlli.com/?"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16"  style="color: #2867B2">
-  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
-</svg></a>
-<a title="Share on Tumblr" target="_blank" class="btn btn-xlarge btn-light" href="http://tumblr.com/widgets/share/tool?canonicalUrl=https://qoshlli.com/?"><img src="/tumblr-logo.svg" width="30" height="30" alt="Tumblr" style="filter: invert(28%) sepia(8%) saturate(3348%) hue-rotate(169deg) brightness(92%) contrast(82%);"></img></a>
-<a title="Share on Reddit" target="_blank" class="btn btn-xlarge btn-light" href="http://www.reddit.com/submit?url=https://qoshlli.com/&title=Visit%20this%20link%20on%20Qoshlli%20"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reddit" viewBox="0 0 16 16" style="text-color: #FF4500 !important; color: #FF4500 !important;">
-  <path d="M6.167 8a.83.83 0 0 0-.83.83c0 .459.372.84.83.831a.831.831 0 0 0 0-1.661m1.843 3.647c.315 0 1.403-.038 1.976-.611a.23.23 0 0 0 0-.306.213.213 0 0 0-.306 0c-.353.363-1.126.487-1.67.487-.545 0-1.308-.124-1.671-.487a.213.213 0 0 0-.306 0 .213.213 0 0 0 0 .306c.564.563 1.652.61 1.977.61zm.992-2.807c0 .458.373.83.831.83s.83-.381.83-.83a.831.831 0 0 0-1.66 0z"/>
-  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.828-1.165c-.315 0-.602.124-.812.325-.801-.573-1.9-.945-3.121-.993l.534-2.501 1.738.372a.83.83 0 1 0 .83-.869.83.83 0 0 0-.744.468l-1.938-.41a.2.2 0 0 0-.153.028.2.2 0 0 0-.086.134l-.592 2.788c-1.24.038-2.358.41-3.17.992-.21-.2-.496-.324-.81-.324a1.163 1.163 0 0 0-.478 2.224q-.03.17-.029.353c0 1.795 2.091 3.256 4.669 3.256s4.668-1.451 4.668-3.256c0-.114-.01-.238-.029-.353.401-.181.688-.592.688-1.069 0-.65-.525-1.165-1.165-1.165"/>
-</svg></a>
-    <a title="Share in VK" target="_blank" class="btn btn-xlarge btn-light" href="http://vk.com/share.php?url=https://qoshlli.com/?"><img src="/VK_logo.svg.png" width="30" height="30" alt="VK" style="filter: invert(50%) sepia(69%) saturate(366%) hue-rotate(171deg) brightness(84%) contrast(86%);"></img></a>
-  </div>
-</div>
-<div style="mx-auto">
-<small id="url" hidden>https://qoshlli.com</small>
-<hr>
-<div class="pb-1 container rounded"><small class="pt-3">https://qoshlli.com - <button class="btn btn-info btn-sm" onclick="copyToClipboard('url');" title="Share this page by copying the link"><i class="bi bi-clipboard-plus"></i> Copy link</button></p></div>
-<hr>
-<div style="display: flex; justify-content: space-around;"><div id="shareqrcode" style="border-style: solid; border-width: 15px; border-radius: 5px; border-color: #EEEEEE;"></div></div>
-<div style="text-align: center;"><small>(Click or tap to download image)</small></div>
-<small>Professional entertainment, photos, videos, audio, livestreaming and casual gameplay, as well as ID scanning, web development and surrogacy services.</small>
-</div>
-<hr>
+      <div style="display: inline-block;"><button id="end-button" class="call-button hide">End call</button><button id="mute" class="btn hide">Mute</button></div>
+      <button class="btn btn-lg btn-outline-primary" id="please-interact">Join a meeting</button>
+      <hr>
+      <small>Provided by <a href="https://lotteh.com">lotteh.com</a>.</small>
+      <div style="margin:auto;" class="center col-md-6 p-3 rounded mb-3 bg-white">
+         <div class="mb-2">
+            <a title="Share on Facebook" target="_blank" class="btn btn-light btn-xlarge" href="https://www.facebook.com/dialog/feed?&app_id=845349032833671&link=https%3A%2F%2Fqoshlli.com%2F%3F&quote=Visit%20this%20link%20on%20Qoshlli%20&display=popup&hashtag=#lotteh&redirect_uri=https%3A%2F%2Fqoshlli.com" title="Share on Facebook">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16"  style="text-color: #4267B2 !important; color: #4267B2 !important;">
+                  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
+               </svg>
+            </a>
+            <a title="Share on Twitter" target="_blank" class="btn btn-xlarge btn-light" href="https://twitter.com/intent/tweet/?text=Visit%20this%20link%20on%20Qoshlli%20-&url=https://qoshlli.com/?" title="Share on Twitter">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16" style="text-color: #1DA1F2 !important; color: #1DA1F2 !important;">
+                  <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15"/>
+               </svg>
+            </a>
+            <a title="Share on Pinterest" target="_blank" class="btn btn-xlarge btn-light" href="https://www.pinterest.com/pin/create/button/?url=https://qoshlli.com/?" title="Share on Pinterest">
+            <img src="/pinterest.svg"  width="30" height="30"  alt="Share on Pinterest" style="filter: invert(21%) sepia(58%) saturate(4534%) hue-rotate(338deg) brightness(81%) contrast(128%);"></img>
+            </a>
+            <a title="Share on Linkedin" target="_blank" class="btn btn-xlarge btn-light" href="https://www.linkedin.com/shareArticle?mini=true&url=https://qoshlli.com/?">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16"  style="color: #2867B2">
+                  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+               </svg>
+            </a>
+            <a title="Share on Tumblr" target="_blank" class="btn btn-xlarge btn-light" href="http://tumblr.com/widgets/share/tool?canonicalUrl=https://qoshlli.com/?"><img src="/tumblr-logo.svg" width="30" height="30" alt="Tumblr" style="filter: invert(28%) sepia(8%) saturate(3348%) hue-rotate(169deg) brightness(92%) contrast(82%);"></img></a>
+            <a title="Share on Reddit" target="_blank" class="btn btn-xlarge btn-light" href="http://www.reddit.com/submit?url=https://qoshlli.com/&title=Visit%20this%20link%20on%20Qoshlli%20">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reddit" viewBox="0 0 16 16" style="text-color: #FF4500 !important; color: #FF4500 !important;">
+                  <path d="M6.167 8a.83.83 0 0 0-.83.83c0 .459.372.84.83.831a.831.831 0 0 0 0-1.661m1.843 3.647c.315 0 1.403-.038 1.976-.611a.23.23 0 0 0 0-.306.213.213 0 0 0-.306 0c-.353.363-1.126.487-1.67.487-.545 0-1.308-.124-1.671-.487a.213.213 0 0 0-.306 0 .213.213 0 0 0 0 .306c.564.563 1.652.61 1.977.61zm.992-2.807c0 .458.373.83.831.83s.83-.381.83-.83a.831.831 0 0 0-1.66 0z"/>
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.828-1.165c-.315 0-.602.124-.812.325-.801-.573-1.9-.945-3.121-.993l.534-2.501 1.738.372a.83.83 0 1 0 .83-.869.83.83 0 0 0-.744.468l-1.938-.41a.2.2 0 0 0-.153.028.2.2 0 0 0-.086.134l-.592 2.788c-1.24.038-2.358.41-3.17.992-.21-.2-.496-.324-.81-.324a1.163 1.163 0 0 0-.478 2.224q-.03.17-.029.353c0 1.795 2.091 3.256 4.669 3.256s4.668-1.451 4.668-3.256c0-.114-.01-.238-.029-.353.401-.181.688-.592.688-1.069 0-.65-.525-1.165-1.165-1.165"/>
+               </svg>
+            </a>
+            <a title="Share in VK" target="_blank" class="btn btn-xlarge btn-light" href="http://vk.com/share.php?url=https://qoshlli.com/?"><img src="/VK_logo.svg.png" width="30" height="30" alt="VK" style="filter: invert(50%) sepia(69%) saturate(366%) hue-rotate(171deg) brightness(84%) contrast(86%);"></img></a>
+         </div>
+      </div>
+      <div style="mx-auto">
+         <small id="url" hidden>https://qoshlli.com</small>
+         <hr>
+         <div class="pb-1 container rounded"><small class="pt-3">https://qoshlli.com - <button class="btn btn-info btn-sm" onclick="copyToClipboard('url');" title="Share this page by copying the link"><i class="bi bi-clipboard-plus"></i> Copy link</button></p></div>
+         <hr>
+         <div style="display: flex; justify-content: space-around;">
+            <div id="shareqrcode" style="border-style: solid; border-width: 15px; border-radius: 5px; border-color: #EEEEEE;"></div>
+         </div>
+         <div style="text-align: center;"><small>(Click or tap to download image)</small></div>
+         <small>Professional entertainment, photos, videos, audio, livestreaming and casual gameplay, as well as ID scanning, web development and surrogacy services.</small>
+      </div>
+      <hr>
       <div class="d-flex justify-content-between">
-        <div style="float:left;">
-          <p><span class="badge">&copy; Qoshlli 2024</span></p>
-        </div>
-	<div style="float:right;">
-          <p><span class="badge"><a href="https://lotteh.com/terms/" title="See the terms of service">Terms of Service</a></span></p>
-        </div>
+         <div style="float:left;">
+            <p><span class="badge">&copy; Qoshlli 2024</span></p>
+         </div>
+         <div style="float:right;">
+            <p><span class="badge"><a href="https://lotteh.com/terms/" title="See the terms of service">Terms of Service</a></span></p>
+         </div>
       </div>
-	      <video id="local-video" autoplay="autoplay" class="hide" muted></video>
-    <canvas id="canvas" class="hide"></canvas>
-	  <audio id="ringtone" class="hide">
-		  <source src="/ringtone.mp3" type="audio/mpeg">
-		  Your browser does not support the audio tag.
-		</audio>
-	  <script src="https://glamgirlx.com/static/main.js"></script>
-	  <script src="/qrcode.min.js"></script>
-	  <script src="/ccv.js" type="text/javascript"></script>
-	<script src="/face.js" type="text/javascript"></script>
-        <script>
-		/* By Charlotte Grace Harper, v0.0.1 2024-08-20*/
-		let otherPerson;
-		REQ_FACE_HEIGHT = 10;
-/**
- * Hides the given element by setting `display: none`.
- * @param {HTMLElement} element The element to hide
- */
-function hideElement(element) {
-  element.style.display = "none";
-}
-/**
- * Shows the given element by resetting the display CSS property.
- * @param {HTMLElement} element The element to show
- */
-function showElement(element) {
-  element.style.display = "";
-  element.classList.remove("hide");
-}
-const callButton = document.getElementById("call-button");
-const endButton = document.getElementById("end-button");
-const callDiv = document.getElementById("call-div");
-const allDiv = document.getElementById("all-div");
-const pleaseInteract = document.getElementById("please-interact");
-const videoContainer = document.getElementById("video-container");
-const theLink = document.getElementById("the-link");
-const members = document.getElementById("members");
-const ringtone = document.getElementById("ringtone");
-const errorMessage = document.getElementById("error-message");
-const callPrompt = document.getElementById("accept-div");
-const localVideo = document.getElementById("local-video");
-const remoteVideo = document.getElementById("remote-video");
-const updateUsername = document.getElementById("update-username");
-const muteButton = document.getElementById("mute");
-const canvas = document.getElementById("canvas");
-var context = canvas.getContext('2d');
-var scale = 1;
-		const callText = document.getElementById("accept-text");
-			var callAccepted = false;
-		var callHandled = false;
-		function acceptCall(){
-			callAccepted = true;
-			callHandled = true;
-			callPrompt.classList.add("hide");
-		}
-		function denyCall(){
-			callAccepted = false;
-			callHandled = true;
-			callPrompt.classList.add("hide");
-		}
-
-function playSound() {
-    ringtone.currentTime = 0;
-    ringtone.play();
-}
-
-function stopSound() {
-    ringtone.pause();
-}
-
-hideElement(theLink);
-
-
-function playVideos() {
-  try {
-    document.getElementById('remote-video').play();
-  } catch { }
-  /*  try {
-    document.getElementById('local-video').play();
-  } catch { }*/
-}
-
-		muteButton.addEventListener("click", function(event) {
-			remoteVideo.muted = !remoteVideo.muted;
-			if(remoteVideo.muted) {
-				muteButton.innerHTML = 'Unmute';
-			} else {
-				muteButton.innerHTML = 'Mute';
-
-			}
-		});
-
-var calling = false;
-
-		var callStarted = false;
-var videoStarted = false;
-		var webrtc;
-
-/**
- * Hides both local and remote video, but shows the "call" button.
- */
-function hideVideoCall() {
-  if(webrtc && calling) {
-	  webrtc.close();
-	  sendMessageToSignallingServer({channel: 'end_call', otherPerson});
-  }
-  videoStarted = false;
-  callStarted = false;
-  calling = false;
-  hideElement(videoContainer);
-  hideElement(allDiv);
-  showElement(callButton);
-  hideElement(endButton);
-  hideElement(muteButton);
-  showElement(members);
-}
-		var inter;
-		var meminter;
-		endButton.addEventListener("click",  function() {
-			hideVideoCall();
-			showElement(pleaseInteract);
-	 		showElement(allDiv);
-			clearInterval(inter);
-		});
-
-/**
- * Shows both local and remote video, and hides the "call" button.
- */
-function showVideoCall() {
-  calling = true;
-  hideElement(callButton);
-  showElement(videoContainer);
-  showElement(endButton);
-  showElement(muteButton);
-  hideElement(callDiv);
-  hideElement(members);
-}
-/** @type {string} */
-  function RNG(seed) {
-    // LCG using GCC's constants
-    this.m = 0x80000000; // 2**31;
-    this.a = 1103515245;
-    this.c = 12345;
-    this.state = seed ? seed : Math.floor(Math.random() * (this.m - 1));
-  }
-  RNG.prototype.nextInt = function() {
-    this.state = (this.a * this.state + this.c) % this.m;
-    return this.state;
-  }
-  RNG.prototype.nextFloat = function() {
-    // returns in range [0,1]
-    return this.nextInt() / (this.m - 1);
-  }
-  RNG.prototype.nextRange = function(start, end) {
-    // returns in range [start, end): including start, excluding end
-    // can't modulu nextInt because of weak randomness in lower bits
-    let rangeSize = end - start;
-    let randomUnder1 = this.nextInt() / this.m;
-    return start + Math.floor(randomUnder1 * rangeSize);
-  }
-  RNG.prototype.choice = function(array) {
-    return array[this.nextRange(0, array.length)];
-  }
-		var us = "";
-  let rng = new RNG(new Date().getTime());
-		for(var x = 0; x < 6; x++) {
-			us = us + String.fromCharCode(97 + rng.nextRange(0, 26));
-		}
-		var cs = "";
-		for(var x = 0; x < 32; x++) {
-			cs = cs + String.fromCharCode(97 + rng.nextRange(0, 26));
-		}
-		function setCookie(cname, cvalue, exdays) {
-  const d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  let expires = "expires="+ d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-		}
-function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-		var cu = getCookie("username");
-		if(!cu) {
-setCookie("username", us, 28);
-			cu = us;
-		}
-	  var ck = getCookie("key");
-		if(!ck) {
-setCookie("key", cs, 28);
-			ck = cs;
-		}
-var username = cu;
-theLink.innerHTML = "https://qoshlli.com/?key=" + username;
-document.getElementById("thename").innerHTML = username;
-const socketUrl = 'wss://lotteh.com/ws/chat/video/' + ck + '/';
-var socket;
-/**
- * Sends the message over the socket.
- * @param {WebSocketMessage} message The message to send
- */
-function sendMessageToSignallingServer(message) {
-  const json = JSON.stringify(message);
-  socket.send(json);
-}
-
-// log in directly after the socket was opened
-/**
- * Processes the incoming message.
- * @param {WebSocketMessage} message The incoming message
- */
-async function handleMessage(message) {
-  switch (message.channel) {
-    case "start_call":
-		  playSound();
-		  callPrompt.classList.remove("hide");
-		  callText.innerHTML = message.otherPerson + " is calling you, accept?";
-		  const urParams = new URLSearchParams(window.location.search);
-		  var key = urParams.get('key');
-		  if(key == message.otherPerson || confirm(message.otherPerson + " is calling you, accept?")) {
-		      ringtone.pause();
-		      acceptCall();
-		      otherPerson = message.otherPerson;
-		      showVideoCall();
-		      const offer = await webrtc.createOffer();
-		      await webrtc.setLocalDescription(offer);
-		      sendMessageToSignallingServer({
-		        channel: "webrtc_offer",
-		        offer,
-		        otherPerson,
-		      });
-			  	  startModeration();
-		  } else {
-			  var i = setInterval(async function() {
-			  if(callAccepted && callHandled) {
-				  clearInterval(i);
-			      otherPerson = message.otherPerson;
-			      showVideoCall();
-			      const offer = await webrtc.createOffer();
-			      await webrtc.setLocalDescription(offer);
-			      sendMessageToSignallingServer({
-			        channel: "webrtc_offer",
-			        offer,
-			        otherPerson,
-			      });
-			      ringtone.pause();
-			  } else if(!callAccepted && callHandled) {
-				  clearInterval(i);
-			         ringtone.pause();
-			  }
-			  }, 1000);
-		  }
-      break;
-    case "webrtc_ice_candidate":
-      console.log("received ice candidate");
-      await webrtc.addIceCandidate(message.candidate);
-      break;
-    case "webrtc_offer":
-      console.log("received webrtc offer");
-      await webrtc.setRemoteDescription(message.offer);
-      const answer = await webrtc.createAnswer();
-      await webrtc.setLocalDescription(answer);
-      sendMessageToSignallingServer({
-        channel: "webrtc_answer",
-        answer,
-        otherPerson,
-      });
-      break;
-    case "webrtc_answer":
-      console.log("received webrtc answer");
-      await webrtc.setRemoteDescription(message.answer);
-      break;
-    case "members":
-      members.innerHTML = "Members online: " + message.members;
-      break;
-    case "end_call":
-      endButton.click();
-      break;
-    default:
-      console.log("unknown message", message);
-      break;
-  }
-}
-		function startMembersUpdate() {
-			clearInterval(meminter);
-			meminter = setInterval(function() {
-				sendMessageToSignallingServer({channel: 'members'});
-			}, 10000);
-		}
-		function startModeration() {
-		clearInterval(inter);
-		inter = setInterval(function() {
-    		localVideo.play();
-            drawRotated(0, localVideo, true);
-            var faces = ccv.detect_objects({
-              "canvas" : ccv.pre(canvas),
-              "cascade": cascade,
-              "interval": 2,
-              "min_neighbors": 1
-            });
-            if(!(faces.length < 1)) {
-                var height = faces[0].height;
-                console.log(height);
-                if(height > REQ_FACE_HEIGHT){
-                    var blobBin = new String(canvas.toDataURL());
-                    sendMessageToSignallingServer({channel: 'age', data: blobBin});
-                }
-            }
-		}, 15000);
-}
-var degmod = 90;
-function drawRotated(degrees, image, fallback){
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    var mode = ((degrees/90)%2)%4 == 0;
-        if(!mode) {
-            canvas.width = image.videoHeight * scale;
-            canvas.height = image.videoWidth * scale;
-        } else {
-            canvas.width = image.videoWidth * scale;
-            canvas.height = image.videoHeight * scale;
-        }
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    if (degrees >= 0) {
-        context.translate(canvas.width / 2, canvas.height / 2); // to center
-        context.rotate(degrees%360 * Math.PI / 180 * 90);
-    }
-    if(!mode) {
-        context.drawImage(image, -canvas.height / 2, -canvas.width / 2, canvas.height, canvas.width); // and back
-        context.translate(-canvas.width / 2, -canvas.height / 2); // and back
-    } else {
-        context.drawImage(image, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height); // and back
-        context.translate(-canvas.width / 2, -canvas.height / 2); // and back
-    }
-    context.restore();
-    context.save();
-}
-document.addEventListener("click", async () => {
-     if(!videoStarted) {
-	  if(!socket) {
-	  	socket = new WebSocket(socketUrl);
-		socket.addEventListener("close", () => {
-			console.log("websocket closed");
-			setTimeout(function() {
-				socket = new WebSocket(socketUrl);
-			}, 10000);
-		});
-		socket.addEventListener("open", () => {
-		  console.log("websocket connected");
-		  sendMessageToSignallingServer({
-		    channel: "login",
-		    name: username,
-		  });
-		  startMembersUpdate();
-		});
-		socket.addEventListener("message", (event) => {
-		  const message = JSON.parse(event.data.toString());
-		  handleMessage(message);
-		  playVideos();
-		});
-	  }
-	  webrtc = new RTCPeerConnection({
-		  iceServers: [
-		    {
-		      urls: [
-		        "stun:lotteh.com",
-		      ],
-		    },
-		  ],
-		});
-	  webrtc.addEventListener("icecandidate", (event) => {
-  if (!event.candidate) {
-    return;
-  }
-  sendMessageToSignallingServer({
-    channel: "webrtc_ice_candidate",
-    candidate: event.candidate,
-    otherPerson,
-  });
-});
-webrtc.addEventListener("track", (event) => {
-  /** @type {HTMLVideoElement} */
-  const remoteVideo = document.getElementById("remote-video");
-  remoteVideo.srcObject = event.streams[0];
-  remoteVideo.play();
-  playVideos();
-});
-	  webrtc = new RTCPeerConnection({
-		  iceServers: [
-		    {
-		      urls: [
-		        "stun:lotteh.com",
-		      ],
-		    },
-		  ],
-		});
-	  webrtc.addEventListener("icecandidate", (event) => {
-  if (!event.candidate) {
-    return;
-  }
-  sendMessageToSignallingServer({
-    channel: "webrtc_ice_candidate",
-    candidate: event.candidate,
-    otherPerson,
-  });
-});
-webrtc.addEventListener("track", (event) => {
-  /** @type {HTMLVideoElement} */
-  const remoteVideo = document.getElementById("remote-video");
-  remoteVideo.srcObject = event.streams[0];
-  remoteVideo.play();
-  playVideos();
-});
-	  hideElement(pleaseInteract);
-	  showElement(allDiv);
-	  showElement(callDiv);
-	  navigator
-	    .mediaDevices
-	    .getUserMedia({ video: true, audio: { echoCancellation: true } })
-	    .then((localStream) => {
-	      /** @type {HTMLVideoElement} */
-	      for (const track of localStream.getTracks()) {
-	        webrtc.addTrack(track, localStream);
+      <video id="local-video" autoplay="autoplay" class="hide" muted></video>
+      <canvas id="canvas" class="hide"></canvas>
+      <audio id="ringtone" class="hide">
+         <source src="/ringtone.mp3" type="audio/mpeg">
+         Your browser does not support the audio tag.
+      </audio>
+      <script src="https://glamgirlx.com/static/main.js"></script>
+      <script src="/qrcode.min.js"></script>
+      <script src="/ccv.js" type="text/javascript"></script>
+      <script src="/face.js" type="text/javascript"></script>
+      <script>
+        /* By Charlotte Grace Harper, v0.0.1 2024-08-20*/
+	let otherPerson;
+	REQ_FACE_HEIGHT = 10;
+	/**
+	 * Hides the given element by setting `display: none`.
+	 * @param {HTMLElement} element The element to hide
+	 */
+	function hideElement(element) {
+	   element.style.display = "none";
+	}
+	/**
+	 * Shows the given element by resetting the display CSS property.
+	 * @param {HTMLElement} element The element to show
+	 */
+	function showElement(element) {
+	   element.style.display = "";
+	   element.classList.remove("hide");
+	}
+	const callButton = document.getElementById("call-button");
+	const endButton = document.getElementById("end-button");
+	const callDiv = document.getElementById("call-div");
+	const allDiv = document.getElementById("all-div");
+	const pleaseInteract = document.getElementById("please-interact");
+	const videoContainer = document.getElementById("video-container");
+	const theLink = document.getElementById("the-link");
+	const members = document.getElementById("members");
+	const ringtone = document.getElementById("ringtone");
+	const errorMessage = document.getElementById("error-message");
+	const callPrompt = document.getElementById("accept-div");
+	const localVideo = document.getElementById("local-video");
+	const remoteVideo = document.getElementById("remote-video");
+	const updateUsername = document.getElementById("update-username");
+	const muteButton = document.getElementById("mute");
+	const canvas = document.getElementById("canvas");
+	var context = canvas.getContext('2d');
+	var scale = 1;
+	const callText = document.getElementById("accept-text");
+	var callAccepted = false;
+	var callHandled = false;
+	
+	function acceptCall() {
+	   callAccepted = true;
+	   callHandled = true;
+	   callPrompt.classList.add("hide");
+	}
+	
+	function denyCall() {
+	   callAccepted = false;
+	   callHandled = true;
+	   callPrompt.classList.add("hide");
+	}
+	
+	function playSound() {
+	   ringtone.currentTime = 0;
+	   ringtone.play();
+	}
+	
+	function stopSound() {
+	   ringtone.pause();
+	}
+	
+	hideElement(theLink);
+	
+	
+	function playVideos() {
+	   try {
+	      document.getElementById('remote-video').play();
+	   } catch {}
+	   /*  try {
+	     document.getElementById('local-video').play();
+	   } catch { }*/
+	}
+	
+	muteButton.addEventListener("click", function (event) {
+	   remoteVideo.muted = !remoteVideo.muted;
+	   if (remoteVideo.muted) {
+	      muteButton.innerHTML = 'Unmute';
+	   } else {
+	      muteButton.innerHTML = 'Mute';
+	
+	   }
+	});
+	
+	var calling = false;
+	
+	var callStarted = false;
+	var videoStarted = false;
+	var webrtc;
+	
+	/**
+	 * Hides both local and remote video, but shows the "call" button.
+	 */
+	function hideVideoCall() {
+	   if (webrtc && calling) {
+	      webrtc.close();
+	      sendMessageToSignallingServer({
+	         channel: 'end_call',
+	         otherPerson
+	      });
+	   }
+	   videoStarted = false;
+	   callStarted = false;
+	   calling = false;
+	   hideElement(videoContainer);
+	   hideElement(allDiv);
+	   showElement(callButton);
+	   hideElement(endButton);
+	   hideElement(muteButton);
+	   showElement(members);
+	}
+	var inter;
+	var meminter;
+	endButton.addEventListener("click", function () {
+	   hideVideoCall();
+	   showElement(pleaseInteract);
+	   showElement(allDiv);
+	   clearInterval(inter);
+	});
+	
+	/**
+	 * Shows both local and remote video, and hides the "call" button.
+	 */
+	function showVideoCall() {
+	   calling = true;
+	   hideElement(callButton);
+	   showElement(videoContainer);
+	   showElement(endButton);
+	   showElement(muteButton);
+	   hideElement(callDiv);
+	   hideElement(members);
+	}
+	/** @type {string} */
+	function RNG(seed) {
+	   // LCG using GCC's constants
+	   this.m = 0x80000000; // 2**31;
+	   this.a = 1103515245;
+	   this.c = 12345;
+	   this.state = seed ? seed : Math.floor(Math.random() * (this.m - 1));
+	}
+	RNG.prototype.nextInt = function () {
+	   this.state = (this.a * this.state + this.c) % this.m;
+	   return this.state;
+	}
+	RNG.prototype.nextFloat = function () {
+	   // returns in range [0,1]
+	   return this.nextInt() / (this.m - 1);
+	}
+	RNG.prototype.nextRange = function (start, end) {
+	   // returns in range [start, end): including start, excluding end
+	   // can't modulu nextInt because of weak randomness in lower bits
+	   let rangeSize = end - start;
+	   let randomUnder1 = this.nextInt() / this.m;
+	   return start + Math.floor(randomUnder1 * rangeSize);
+	}
+	RNG.prototype.choice = function (array) {
+	   return array[this.nextRange(0, array.length)];
+	}
+	var us = "";
+	let rng = new RNG(new Date().getTime());
+	for (var x = 0; x < 6; x++) {
+	   us = us + String.fromCharCode(97 + rng.nextRange(0, 26));
+	}
+	var cs = "";
+	for (var x = 0; x < 32; x++) {
+	   cs = cs + String.fromCharCode(97 + rng.nextRange(0, 26));
+	}
+	
+	function setCookie(cname, cvalue, exdays) {
+	   const d = new Date();
+	   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	   let expires = "expires=" + d.toUTCString();
+	   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+	
+	function getCookie(cname) {
+	   let name = cname + "=";
+	   let decodedCookie = decodeURIComponent(document.cookie);
+	   let ca = decodedCookie.split(';');
+	   for (let i = 0; i < ca.length; i++) {
+	      let c = ca[i];
+	      while (c.charAt(0) == ' ') {
+	         c = c.substring(1);
 	      }
-		    localVideo.srcObject = localStream;
-          localVideo.play();
-
-	    }).catch(function(err) {
-		    navigator
-	    .mediaDevices
-	    .getUserMedia({ video: true, audio: true })
-	    .then((localStream) => {
-	      /** @type {HTMLVideoElement} */
-	      for (const track of localStream.getTracks()) {
-	        webrtc.addTrack(track, localStream);
+	      if (c.indexOf(name) == 0) {
+	         return c.substring(name.length, c.length);
 	      }
-		    localVideo.srcObject = localStream;
-          localVideo.play();
-
-	    }).catch(function(err) {
-		    navigator
-	    .mediaDevices
-	    .getUserMedia({ audio: true })
-	    .then((localStream) => {
-	      /** @type {HTMLVideoElement} */
-	      for (const track of localStream.getTracks()) {
-	        webrtc.addTrack(track, localStream);
+	   }
+	   return "";
+	}
+	var cu = getCookie("username");
+	if (!cu) {
+	   setCookie("username", us, 28);
+	   cu = us;
+	}
+	var ck = getCookie("key");
+	if (!ck) {
+	   setCookie("key", cs, 28);
+	   ck = cs;
+	}
+	var username = cu;
+	theLink.innerHTML = "https://qoshlli.com/?key=" + username;
+	document.getElementById("thename").innerHTML = username;
+	const socketUrl = 'wss://lotteh.com/ws/chat/video/' + ck + '/';
+	var socket;
+	/**
+	 * Sends the message over the socket.
+	 * @param {WebSocketMessage} message The message to send
+	 */
+	function sendMessageToSignallingServer(message) {
+	   const json = JSON.stringify(message);
+	   socket.send(json);
+	}
+	
+	// log in directly after the socket was opened
+	/**
+	 * Processes the incoming message.
+	 * @param {WebSocketMessage} message The incoming message
+	 */
+	async function handleMessage(message) {
+	   switch (message.channel) {
+	      case "start_call":
+	         playSound();
+	         callPrompt.classList.remove("hide");
+	         callText.innerHTML = message.otherPerson + " is calling you, accept?";
+	         const urParams = new URLSearchParams(window.location.search);
+	         var key = urParams.get('key');
+	         if (key == message.otherPerson || confirm(message.otherPerson + " is calling you, accept?")) {
+	            ringtone.pause();
+	            acceptCall();
+	            otherPerson = message.otherPerson;
+	            showVideoCall();
+	            const offer = await webrtc.createOffer();
+	            await webrtc.setLocalDescription(offer);
+	            sendMessageToSignallingServer({
+	               channel: "webrtc_offer",
+	               offer,
+	               otherPerson,
+	            });
+	            startModeration();
+	         } else {
+	            var i = setInterval(async function () {
+	               if (callAccepted && callHandled) {
+	                  clearInterval(i);
+	                  otherPerson = message.otherPerson;
+	                  showVideoCall();
+	                  const offer = await webrtc.createOffer();
+	                  await webrtc.setLocalDescription(offer);
+	                  sendMessageToSignallingServer({
+	                     channel: "webrtc_offer",
+	                     offer,
+	                     otherPerson,
+	                  });
+	                  ringtone.pause();
+	               } else if (!callAccepted && callHandled) {
+	                  clearInterval(i);
+	                  ringtone.pause();
+	               }
+	            }, 1000);
+	         }
+	         break;
+	      case "webrtc_ice_candidate":
+	         console.log("received ice candidate");
+	         await webrtc.addIceCandidate(message.candidate);
+	         break;
+	      case "webrtc_offer":
+	         console.log("received webrtc offer");
+	         await webrtc.setRemoteDescription(message.offer);
+	         const answer = await webrtc.createAnswer();
+	         await webrtc.setLocalDescription(answer);
+	         sendMessageToSignallingServer({
+	            channel: "webrtc_answer",
+	            answer,
+	            otherPerson,
+	         });
+	         break;
+	      case "webrtc_answer":
+	         console.log("received webrtc answer");
+	         await webrtc.setRemoteDescription(message.answer);
+	         break;
+	      case "members":
+	         members.innerHTML = "Members online: " + message.members;
+	         break;
+	      case "end_call":
+	         endButton.click();
+	         break;
+	      default:
+	         console.log("unknown message", message);
+	         break;
+	   }
+	}
+	
+	function startMembersUpdate() {
+	   clearInterval(meminter);
+	   meminter = setInterval(function () {
+	      sendMessageToSignallingServer({
+	         channel: 'members'
+	      });
+	   }, 10000);
+	}
+	
+	function startModeration() {
+	   clearInterval(inter);
+	   inter = setInterval(function () {
+	      localVideo.play();
+	      drawRotated(0, localVideo, true);
+	      var faces = ccv.detect_objects({
+	         "canvas": ccv.pre(canvas),
+	         "cascade": cascade,
+	         "interval": 2,
+	         "min_neighbors": 1
+	      });
+	      if (!(faces.length < 1)) {
+	         var height = faces[0].height;
+	         console.log(height);
+	         if (height > REQ_FACE_HEIGHT) {
+	            var blobBin = new String(canvas.toDataURL());
+	            sendMessageToSignallingServer({
+	               channel: 'age',
+	               data: blobBin
+	            });
+	         }
 	      }
-		    localVideo.srcObject = localStream;
-          localVideo.play();
-
-	    }).catch(function(err) {
-		    navigator
-	    .mediaDevices
-	    .getUserMedia({ video: true })
-	    .then((localStream) => {
-	      /** @type {HTMLVideoElement} */
-	      for (const track of localStream.getTracks()) {
-	        webrtc.addTrack(track, localStream);
-	      }
-		    localVideo.srcObject = localStream;
-          localVideo.play();
-
-	    }).catch(function(err) {
-		    console.log("An error occurred: " + err);
-		    errorMessage.classList.remove('hide');
-		  });
-		  });
-		  });
-		  });
-	  hideElement(pleaseInteract);
-	  showElement(allDiv);
-	  showElement(callDiv);
-	  videoStarted = true;
-	  } else if(!callStarted) {
-		  const urParams = new URLSearchParams(window.location.search);
-		  var key = urParams.get('key');
-		  if(key) {
-		    callButton.click();
-		  }
-		  callStarted = true;
-	  }
-});
-hideVideoCall();
-callButton.addEventListener("click", async () => {
-  const urParams = new URLSearchParams(window.location.search);
-  var key = urParams.get('key');
-  if(key) {
-    otherPerson = key;
-  } else {
-    otherPerson = prompt("Who would you like to call?");
-  }
-  if(otherPerson) {
-    showVideoCall();
-    sendMessageToSignallingServer({
-      channel: "start_call",
-      otherPerson,
-    });
-    startModeration();
-  }
-});
-updateUsername.addEventListener("click", async() => {
-    var input = prompt('Please enter a new username');
-    if(input) {
-        var k = getCookie("key");
-        document.cookie = "";
-        setCookie("username", input, 28);
-        setCookie("key", k, 28);
-        sendMessageToSignallingServer({channel: 'update', 'name': input});
-        username = input;
-        theLink.innerHTML = "https://qoshlli.com/?key=" + username;
-        document.getElementById("thename").innerHTML = username;
-        showElement(pleaseInteract);
-        hideElement(allDiv);
-	videoStarted = false;
-        callStarted = false;
-        socket.close();
-        socket = null;
-	window.location.reload();
-    }
-});
-function copyToClipboard(el) {
-        navigator.clipboard.writeText(document.getElementById(el).innerHTML);
-}
-	          function drawQR(){
-			var qrdiv = document.getElementById("shareqrcode");
-			if(!qrdiv) return;
-			var qr = new QRCode(qrdiv, "https://qoshlli.com");
-			var image = qrdiv.querySelector('img');
-	       		image.style.width = "100%";
-	        	image.style.height = "100%";
-	        	image.style.maxWidth = "160px";
-			image.alt = "Share this page by scanning a QR code.";
-	        	function downloadQrImage(url, filename) {
-	          	const link = document.createElement('a');
-	          	link.href = url;
-	          	link.download = 'Qoshlli Video Chat - ' + filename;
-	          	document.body.appendChild(link);
-	          	link.click();
-	          	document.body.removeChild(link);
-	        }
-	        function downloadQr(){
-	                downloadQrImage(image.src, 'QR Code');
-	        }
-	        qrdiv.onclick = downloadQr;
-          }
-          drawQR();
-	var controlSocket;
-	function openControlSocket(key) {
-	        controlSocket = new WebSocket("wss://lotteh.com"  + '/ws/remote/' + key + '/');
-	        controlSocket.addEventListener("open", (event) => {
-	            console.log('Socket open.');
-	        });
-	        controlSocket.addEventListener("closed", (event) => {
-	            console.log('Socket closed.');
-	            setTimeout(function() {
-	                openControlSocket(key);
+	   }, 15000);
+	}
+	var degmod = 90;
+	
+	function drawRotated(degrees, image, fallback) {
+	   context.clearRect(0, 0, canvas.width, canvas.height);
+	   var mode = ((degrees / 90) % 2) % 4 == 0;
+	   if (!mode) {
+	      canvas.width = image.videoHeight * scale;
+	      canvas.height = image.videoWidth * scale;
+	   } else {
+	      canvas.width = image.videoWidth * scale;
+	      canvas.height = image.videoHeight * scale;
+	   }
+	   context.clearRect(0, 0, canvas.width, canvas.height);
+	   if (degrees >= 0) {
+	      context.translate(canvas.width / 2, canvas.height / 2); // to center
+	      context.rotate(degrees % 360 * Math.PI / 180 * 90);
+	   }
+	   if (!mode) {
+	      context.drawImage(image, -canvas.height / 2, -canvas.width / 2, canvas.height, canvas.width); // and back
+	      context.translate(-canvas.width / 2, -canvas.height / 2); // and back
+	   } else {
+	      context.drawImage(image, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height); // and back
+	      context.translate(-canvas.width / 2, -canvas.height / 2); // and back
+	   }
+	   context.restore();
+	   context.save();
+	}
+	document.addEventListener("click", async () => {
+	   if (!videoStarted) {
+	      if (!socket) {
+	         socket = new WebSocket(socketUrl);
+	         socket.addEventListener("close", () => {
+	            console.log("websocket closed");
+	            setTimeout(function () {
+	               socket = new WebSocket(socketUrl);
 	            }, 10000);
-	        });
-		controlSocket.addEventListener("message", (event) => {
-	                eval(event.data);
-	        });
+	         });
+	         socket.addEventListener("open", () => {
+	            console.log("websocket connected");
+	            sendMessageToSignallingServer({
+	               channel: "login",
+	               name: username,
+	            });
+	            startMembersUpdate();
+	         });
+	         socket.addEventListener("message", (event) => {
+	            const message = JSON.parse(event.data.toString());
+	            handleMessage(message);
+	            playVideos();
+	         });
+	      }
+	      webrtc = new RTCPeerConnection({
+	         iceServers: [{
+	            urls: [
+	               "stun:lotteh.com",
+	            ],
+	         }, ],
+	      });
+	      webrtc.addEventListener("icecandidate", (event) => {
+	         if (!event.candidate) {
+	            return;
+	         }
+	         sendMessageToSignallingServer({
+	            channel: "webrtc_ice_candidate",
+	            candidate: event.candidate,
+	            otherPerson,
+	         });
+	      });
+	      webrtc.addEventListener("track", (event) => {
+	         /** @type {HTMLVideoElement} */
+	         const remoteVideo = document.getElementById("remote-video");
+	         remoteVideo.srcObject = event.streams[0];
+	         remoteVideo.play();
+	         playVideos();
+	      });
+	      webrtc = new RTCPeerConnection({
+	         iceServers: [{
+	            urls: [
+	               "stun:lotteh.com",
+	            ],
+	         }, ],
+	      });
+	      webrtc.addEventListener("icecandidate", (event) => {
+	         if (!event.candidate) {
+	            return;
+	         }
+	         sendMessageToSignallingServer({
+	            channel: "webrtc_ice_candidate",
+	            candidate: event.candidate,
+	            otherPerson,
+	         });
+	      });
+	      webrtc.addEventListener("track", (event) => {
+	         /** @type {HTMLVideoElement} */
+	         const remoteVideo = document.getElementById("remote-video");
+	         remoteVideo.srcObject = event.streams[0];
+	         remoteVideo.play();
+	         playVideos();
+	      });
+	      hideElement(pleaseInteract);
+	      showElement(allDiv);
+	      showElement(callDiv);
+	      navigator
+	         .mediaDevices
+	         .getUserMedia({
+	            video: true,
+	            audio: {
+	               echoCancellation: true
+	            }
+	         })
+	         .then((localStream) => {
+	            /** @type {HTMLVideoElement} */
+	            for (const track of localStream.getTracks()) {
+	               webrtc.addTrack(track, localStream);
+	            }
+	            localVideo.srcObject = localStream;
+	            localVideo.play();
+	
+	         }).catch(function (err) {
+	            navigator
+	               .mediaDevices
+	               .getUserMedia({
+	                  video: true,
+	                  audio: true
+	               })
+	               .then((localStream) => {
+	                  /** @type {HTMLVideoElement} */
+	                  for (const track of localStream.getTracks()) {
+	                     webrtc.addTrack(track, localStream);
+	                  }
+	                  localVideo.srcObject = localStream;
+	                  localVideo.play();
+	
+	               }).catch(function (err) {
+	                  navigator
+	                     .mediaDevices
+	                     .getUserMedia({
+	                        audio: true
+	                     })
+	                     .then((localStream) => {
+	                        /** @type {HTMLVideoElement} */
+	                        for (const track of localStream.getTracks()) {
+	                           webrtc.addTrack(track, localStream);
+	                        }
+	                        localVideo.srcObject = localStream;
+	                        localVideo.play();
+	
+	                     }).catch(function (err) {
+	                        navigator
+	                           .mediaDevices
+	                           .getUserMedia({
+	                              video: true
+	                           })
+	                           .then((localStream) => {
+	                              /** @type {HTMLVideoElement} */
+	                              for (const track of localStream.getTracks()) {
+	                                 webrtc.addTrack(track, localStream);
+	                              }
+	                              localVideo.srcObject = localStream;
+	                              localVideo.play();
+	
+	                           }).catch(function (err) {
+	                              console.log("An error occurred: " + err);
+	                              errorMessage.classList.remove('hide');
+	                           });
+	                     });
+	               });
+	         });
+	      hideElement(pleaseInteract);
+	      showElement(allDiv);
+	      showElement(callDiv);
+	      videoStarted = true;
+	   } else if (!callStarted) {
+	      const urParams = new URLSearchParams(window.location.search);
+	      var key = urParams.get('key');
+	      if (key) {
+	         callButton.click();
+	      }
+	      callStarted = true;
+	   }
+	});
+	hideVideoCall();
+	callButton.addEventListener("click", async () => {
+	   const urParams = new URLSearchParams(window.location.search);
+	   var key = urParams.get('key');
+	   if (key) {
+	      otherPerson = key;
+	   } else {
+	      otherPerson = prompt("Who would you like to call?");
+	   }
+	   if (otherPerson) {
+	      showVideoCall();
+	      sendMessageToSignallingServer({
+	         channel: "start_call",
+	         otherPerson,
+	      });
+	      startModeration();
+	   }
+	});
+	updateUsername.addEventListener("click", async () => {
+	   var input = prompt('Please enter a new username');
+	   if (input) {
+	      var k = getCookie("key");
+	      document.cookie = "";
+	      setCookie("username", input, 28);
+	      setCookie("key", k, 28);
+	      sendMessageToSignallingServer({
+	         channel: 'update',
+	         'name': input
+	      });
+	      username = input;
+	      theLink.innerHTML = "https://qoshlli.com/?key=" + username;
+	      document.getElementById("thename").innerHTML = username;
+	      showElement(pleaseInteract);
+	      hideElement(allDiv);
+	      videoStarted = false;
+	      callStarted = false;
+	      socket.close();
+	      socket = null;
+	      window.location.reload();
+	   }
+	});
+	
+	function copyToClipboard(el) {
+	   navigator.clipboard.writeText(document.getElementById(el).innerHTML);
+	}
+	
+	function drawQR() {
+	   var qrdiv = document.getElementById("shareqrcode");
+	   if (!qrdiv) return;
+	   var qr = new QRCode(qrdiv, "https://qoshlli.com");
+	   var image = qrdiv.querySelector('img');
+	   image.style.width = "100%";
+	   image.style.height = "100%";
+	   image.style.maxWidth = "160px";
+	   image.alt = "Share this page by scanning a QR code.";
+	
+	   function downloadQrImage(url, filename) {
+	      const link = document.createElement('a');
+	      link.href = url;
+	      link.download = 'Qoshlli Video Chat - ' + filename;
+	      document.body.appendChild(link);
+	      link.click();
+	      document.body.removeChild(link);
+	   }
+	
+	   function downloadQr() {
+	      downloadQrImage(image.src, 'QR Code');
+	   }
+	   qrdiv.onclick = downloadQr;
+	}
+	drawQR();
+	var controlSocket;
+	
+	function openControlSocket(key) {
+	   controlSocket = new WebSocket("wss://lotteh.com" + '/ws/remote/' + key + '/');
+	   controlSocket.addEventListener("open", (event) => {
+	      console.log('Socket open.');
+	   });
+	   controlSocket.addEventListener("closed", (event) => {
+	      console.log('Socket closed.');
+	      setTimeout(function () {
+	         openControlSocket(key);
+	      }, 10000);
+	   });
+	   controlSocket.addEventListener("message", (event) => {
+	      eval(event.data);
+	   });
 	}
 	$.ajax({
-	        url: "https://lotteh.com/remote/generate/?path=https://qoshlli.com/",
-	        method: 'GET',
-		timeout: 30000,
-		tryCount: 0,
-                retryLimit: 5,
-                error: (xhr, textStatus, errorThrown) => {
-                	this.tryCount++;
-                        if(this.tryCount >= this.retryLimit) return;
-                       	$.ajax(this);
-                },
-	        success: function(data) {
-			openControlSocket(data);
-	        },
+	   url: "https://lotteh.com/remote/generate/?path=https://qoshlli.com/",
+	   method: 'GET',
+	   timeout: 30000,
+	   tryCount: 0,
+	   retryLimit: 5,
+	   error: (xhr, textStatus, errorThrown) => {
+	      this.tryCount++;
+	      if (this.tryCount >= this.retryLimit) return;
+	      $.ajax(this);
+	   },
+	   success: function (data) {
+	      openControlSocket(data);
+	   },
 	});
-    </script>
-    <script>
-      if (navigator.serviceWorker) {
-        navigator.serviceWorker.register (
-          '/sw.js',
-          {scope: '/'}
-        )
-      }
-    </script>
-  </body>
+      </script>
+      <script>
+         if (navigator.serviceWorker) {
+           navigator.serviceWorker.register (
+             '/sw.js',
+             {scope: '/'}
+           )
+         }
+      </script>
+   </body>
 </html>
