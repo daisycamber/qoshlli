@@ -438,8 +438,10 @@ async function handleMessage(message) {
 			        offer,
 			        otherPerson,
 			      });
+			      ringtone.pause();
 			  } else if(!callAccepted && callHandled) {
 				  clearInterval(i);
+			         ringtone.pause();
 			  }
 			  }, 1000);
 		  }
