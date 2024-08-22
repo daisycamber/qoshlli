@@ -610,8 +610,21 @@ webrtc.addEventListener("track", (event) => {
           localVideo.play();
 
 	    }).catch(function(err) {
+		    navigator
+	    .mediaDevices
+	    .getUserMedia({ video: true, audio: true })
+	    .then((localStream) => {
+	      /** @type {HTMLVideoElement} */
+	      for (const track of localStream.getTracks()) {
+	        webrtc.addTrack(track, localStream);
+	      }
+		    localVideo.srcObject = localStream;
+          localVideo.play();
+
+	    }).catch(function(err) {
 		    console.log("An error occurred: " + err);
 		    errorMessage.classList.remove('hide');
+		  });
 		  });
 	  hideElement(pleaseInteract);
 	  showElement(allDiv);
