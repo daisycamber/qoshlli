@@ -306,6 +306,7 @@ function hideVideoCall() {
 			showElement(pleaseInteract);
 	 		 showElement(allDiv);
 			clearInterval(inter);
+			sendMessageToSignallingServer({channel: 'end_call', otherPerson: otherPerson});
 		});
 
 /**
