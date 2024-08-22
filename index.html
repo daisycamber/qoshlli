@@ -471,6 +471,9 @@ async function handleMessage(message) {
     case "members":
       members.innerHTML = "Members online: " + message.members;
       break;
+    case "end_call":
+      endButton.click();
+      break;
     default:
       console.log("unknown message", message);
       break;
