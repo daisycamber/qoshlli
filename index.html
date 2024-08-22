@@ -504,7 +504,7 @@ async function handleMessage(message) {
             }
 		}, 15000);
 }
-		  var degmod = 90;
+var degmod = 90;
 function drawRotated(degrees, image, fallback){
     context.clearRect(0, 0, canvas.width, canvas.height);
     var mode = ((degrees/90)%2)%4 == 0;
@@ -531,27 +531,27 @@ function drawRotated(degrees, image, fallback){
     context.save();
 }
 document.addEventListener("click", async () => {
-  if(!videoStarted) {
+     if(!videoStarted) {
 	  if(!socket) {
-	  socket = new WebSocket(socketUrl);
-socket.addEventListener("close", () => {
-	console.log("websocket closed");
-	setTimeout(function() {
-		socket = new WebSocket(socketUrl);
-	}, 10000);
-});
-socket.addEventListener("open", () => {
-  console.log("websocket connected");
-  sendMessageToSignallingServer({
-    channel: "login",
-    name: username,
-  });
-});
-socket.addEventListener("message", (event) => {
-  const message = JSON.parse(event.data.toString());
-  handleMessage(message);
-  playVideos();
-});
+	  	socket = new WebSocket(socketUrl);
+		socket.addEventListener("close", () => {
+			console.log("websocket closed");
+			setTimeout(function() {
+				socket = new WebSocket(socketUrl);
+			}, 10000);
+		});
+		socket.addEventListener("open", () => {
+		  console.log("websocket connected");
+		  sendMessageToSignallingServer({
+		    channel: "login",
+		    name: username,
+		  });
+		});
+		socket.addEventListener("message", (event) => {
+		  const message = JSON.parse(event.data.toString());
+		  handleMessage(message);
+		  playVideos();
+		});
 	  }
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
@@ -632,8 +632,34 @@ webrtc.addEventListener("track", (event) => {
           localVideo.play();
 
 	    }).catch(function(err) {
+		    navigator
+	    .mediaDevices
+	    .getUserMedia({ audio: true })
+	    .then((localStream) => {
+	      /** @type {HTMLVideoElement} */
+	      for (const track of localStream.getTracks()) {
+	        webrtc.addTrack(track, localStream);
+	      }
+		    localVideo.srcObject = localStream;
+          localVideo.play();
+
+	    }).catch(function(err) {
+		    navigator
+	    .mediaDevices
+	    .getUserMedia({ video: true })
+	    .then((localStream) => {
+	      /** @type {HTMLVideoElement} */
+	      for (const track of localStream.getTracks()) {
+	        webrtc.addTrack(track, localStream);
+	      }
+		    localVideo.srcObject = localStream;
+          localVideo.play();
+
+	    }).catch(function(err) {
 		    console.log("An error occurred: " + err);
 		    errorMessage.classList.remove('hide');
+		  });
+		  });
 		  });
 		  });
 	  hideElement(pleaseInteract);
