@@ -551,13 +551,13 @@ document.addEventListener("click", async () => {
 		    channel: "login",
 		    name: username,
 		  });
+		  startMembersUpdate();
 		});
 		socket.addEventListener("message", (event) => {
 		  const message = JSON.parse(event.data.toString());
 		  handleMessage(message);
 		  playVideos();
 		});
-		  startMembersUpdate();
 	  }
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
