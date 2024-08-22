@@ -496,6 +496,11 @@
 	         channel: 'members'
 	      });
 	   }, 10000);
+	   setTimeout(function () {
+	      sendMessageToSignallingServer({
+	         channel: 'members'
+	      });
+	   }, 3000);
 	}
 
 	function moderate() {
