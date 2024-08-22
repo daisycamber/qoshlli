@@ -497,11 +497,8 @@
 	      });
 	   }, 10000);
 	}
-	
-	function startModeration() {
-	   clearInterval(inter);
-	   inter = setInterval(function () {
-	      localVideo.play();
+
+	function moderate() {
 	      drawRotated(0, localVideo, true);
 	      var faces = ccv.detect_objects({
 	         "canvas": ccv.pre(canvas),
@@ -520,7 +517,18 @@
 	            });
 	         }
 	      }
+	}
+	      
+	function startModeration() {
+	   clearInterval(inter);
+	   inter = setInterval(function() {
+	      localVideo.play();
+	      moderate();
 	   }, 15000);
+	   setTimeout(function() {
+	      localVideo.play();
+	      moderate();
+	   }, 3000);
 	}
 	var degmod = 90;
 	
