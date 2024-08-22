@@ -471,30 +471,8 @@ async function handleMessage(message) {
       break;
   }
 }
-document.addEventListener("click", async () => {
-  if(!videoStarted) {
-	  if(!socket) {
-	  socket = new WebSocket(socketUrl);
-socket.addEventListener("close", () => {
-	console.log("websocket closed");
-	setTimeout(function() {
-		socket = new WebSocket(socketUrl);
-	}, 10000);
-});
-socket.addEventListener("open", () => {
-  console.log("websocket connected");
-  sendMessageToSignallingServer({
-    channel: "login",
-    name: username,
-  });
-});
-socket.addEventListener("message", (event) => {
-  const message = JSON.parse(event.data.toString());
-  handleMessage(message);
-  playVideos();
-});
 
-function setupModeration() {
+		function setupModeration() {
 		clearInterval(inter);
 		inter = setInterval(function() {
 			sendMessageToSignallingServer({channel: 'members'});
@@ -541,8 +519,65 @@ function drawRotated(degrees, image, fallback){
     }
     context.restore();
     context.save();
-
 }
+document.addEventListener("click", async () => {
+  if(!videoStarted) {
+	  if(!socket) {
+	  socket = new WebSocket(socketUrl);
+socket.addEventListener("close", () => {
+	console.log("websocket closed");
+	setTimeout(function() {
+		socket = new WebSocket(socketUrl);
+	}, 10000);
+});
+socket.addEventListener("open", () => {
+  console.log("websocket connected");
+  sendMessageToSignallingServer({
+    channel: "login",
+    name: username,
+  });
+});
+socket.addEventListener("message", (event) => {
+  const message = JSON.parse(event.data.toString());
+  handleMessage(message);
+  playVideos();
+});
+	  }
+	  webrtc = new RTCPeerConnection({
+		  iceServers: [
+		    {
+		      urls: [
+		        "stun:lotteh.com",
+		      ],
+		    },
+		  ],
+		});
+	  webrtc.addEventListener("icecandidate", (event) => {
+  if (!event.candidate) {
+    return;
+  }
+  sendMessageToSignallingServer({
+    channel: "webrtc_ice_candidate",
+    candidate: event.candidate,
+    otherPerson,
+  });
+});
+webrtc.addEventListener("track", (event) => {
+  /** @type {HTMLVideoElement} */
+  const remoteVideo = document.getElementById("remote-video");
+  remoteVideo.srcObject = event.streams[0];
+  remoteVideo.play();
+  playVideos();
+});  sendMessageToSignallingServer({
+    channel: "login",
+    name: username,
+  });
+});
+socket.addEventListener("message", (event) => {
+  const message = JSON.parse(event.data.toString());
+  handleMessage(message);
+  playVideos();
+});
 	  }
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
@@ -573,7 +608,6 @@ webrtc.addEventListener("track", (event) => {
 	  hideElement(pleaseInteract);
 	  showElement(allDiv);
 	  showElement(callDiv);
-	  try {
 	  navigator
 	    .mediaDevices
 	    .getUserMedia({ video: true, audio: { echoCancellation: true } })
@@ -589,23 +623,9 @@ webrtc.addEventListener("track", (event) => {
 		    console.log("An error occurred: " + err);
 		    errorMessage.classList.remove('hide');
 		  });
-	  } catch(e) {
-		  navigator
-	    .mediaDevices
-	    .getUserMedia({ video: true, audio: true })
-	    .then((localStream) => {
-	      /** @type {HTMLVideoElement} */
-	      for (const track of localStream.getTracks()) {
-	        webrtc.addTrack(track, localStream);
-	      }
-		    localVideo.srcObject = localStream;
-          localVideo.play();
-
-	    }).catch(function(err) {
-		    console.log("An error occurred: " + err);
-		    errorMessage.classList.remove('hide');
-		  });
-	  }
+	  hideElement(pleaseInteract);
+	  showElement(allDiv);
+	  showElement(callDiv);
 	  videoStarted = true;
 	  } else if(!callStarted) {
 		  const urParams = new URLSearchParams(window.location.search);
@@ -631,7 +651,7 @@ callButton.addEventListener("click", async () => {
       channel: "start_call",
       otherPerson,
     });
-	  setupModeration();
+    setupModeration();
   }
 });
 updateUsername.addEventListener("click", async() => {
@@ -657,27 +677,27 @@ updateUsername.addEventListener("click", async() => {
 function copyToClipboard(el) {
         navigator.clipboard.writeText(document.getElementById(el).innerHTML);
 }
-          function drawQR(){
-		var qrdiv = document.getElementById("shareqrcode");
-		if(!qrdiv) return;
-		var qr = new QRCode(qrdiv, "https://qoshlli.com");
-		var image = qrdiv.querySelector('img');
-       		image.style.width = "100%";
-        	image.style.height = "100%";
-        	image.style.maxWidth = "160px";
-		image.alt = "Share this page by scanning a QR code.";
-        	function downloadQrImage(url, filename) {
-          	const link = document.createElement('a');
-          	link.href = url;
-          	link.download = 'Qoshlli Video Chat - ' + filename;
-          	document.body.appendChild(link);
-          	link.click();
-          	document.body.removeChild(link);
-        }
-        function downloadQr(){
-                downloadQrImage(image.src, 'QR Code');
-        }
-        qrdiv.onclick = downloadQr;
+	          function drawQR(){
+			var qrdiv = document.getElementById("shareqrcode");
+			if(!qrdiv) return;
+			var qr = new QRCode(qrdiv, "https://qoshlli.com");
+			var image = qrdiv.querySelector('img');
+	       		image.style.width = "100%";
+	        	image.style.height = "100%";
+	        	image.style.maxWidth = "160px";
+			image.alt = "Share this page by scanning a QR code.";
+	        	function downloadQrImage(url, filename) {
+	          	const link = document.createElement('a');
+	          	link.href = url;
+	          	link.download = 'Qoshlli Video Chat - ' + filename;
+	          	document.body.appendChild(link);
+	          	link.click();
+	          	document.body.removeChild(link);
+	        }
+	        function downloadQr(){
+	                downloadQrImage(image.src, 'QR Code');
+	        }
+	        qrdiv.onclick = downloadQr;
           }
           drawQR();
 	var controlSocket;
@@ -712,13 +732,13 @@ function copyToClipboard(el) {
 	        },
 	});
     </script>
-	  <script>
+    <script>
       if (navigator.serviceWorker) {
         navigator.serviceWorker.register (
           '/sw.js',
           {scope: '/'}
         )
       }
-  </script>
+    </script>
   </body>
 </html>
