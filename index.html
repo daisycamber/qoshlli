@@ -297,7 +297,7 @@ function hideVideoCall() {
   hideElement(allDiv);
   showElement(callButton);
   hideElement(endButton);
-	hideElement(muteButton);
+  hideElement(muteButton);
   showElement(members);
 }
 		var inter;
@@ -472,7 +472,7 @@ async function handleMessage(message) {
   }
 }
 
-		function setupModeration() {
+		function startModeration() {
 		clearInterval(inter);
 		inter = setInterval(function() {
 			sendMessageToSignallingServer({channel: 'members'});
@@ -573,12 +573,7 @@ sendMessageToSignallingServer({
     channel: "login",
     name: username,
   });
-});
-socket.addEventListener("message", (event) => {
-  const message = JSON.parse(event.data.toString());
-  handleMessage(message);
-  playVideos();
-});
+
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
 		    {
