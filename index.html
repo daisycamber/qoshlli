@@ -305,6 +305,7 @@ function hideVideoCall() {
   showElement(members);
 }
 		var inter;
+		var meminter;
 		endButton.addEventListener("click",  function() {
 			hideVideoCall();
 			showElement(pleaseInteract);
@@ -481,11 +482,15 @@ async function handleMessage(message) {
       break;
   }
 }
-
+		function startMembersUpdate() {
+			clearInterval(meminter);
+			meminter = setInterval(function() {
+				sendMessageToSignallingServer({channel: 'members'});
+			}, 10000);
+		}
 		function startModeration() {
 		clearInterval(inter);
 		inter = setInterval(function() {
-			sendMessageToSignallingServer({channel: 'members'});
     		localVideo.play();
             drawRotated(0, localVideo, true);
             var faces = ccv.detect_objects({
@@ -552,6 +557,7 @@ document.addEventListener("click", async () => {
 		  handleMessage(message);
 		  playVideos();
 		});
+		  startMembersUpdate();
 	  }
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
