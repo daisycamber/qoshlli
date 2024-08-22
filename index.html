@@ -300,11 +300,12 @@ function hideVideoCall() {
 	hideElement(muteButton);
   showElement(members);
 }
-
+		var inter;
 		endButton.addEventListener("click",  function() {
 			hideVideoCall();
-				showElement(pleaseInteract);
-	  showElement(allDiv);
+			showElement(pleaseInteract);
+	 		 showElement(allDiv);
+			clearInterval(inter);
 		});
 
 /**
@@ -423,6 +424,7 @@ async function handleMessage(message) {
 		        offer,
 		        otherPerson,
 		      });
+			  	  setupModeration();
 		  } else {
 			  var i = setInterval(async function() {
 			  if(callAccepted && callHandled) {
@@ -469,8 +471,6 @@ async function handleMessage(message) {
       break;
   }
 }
-
-		var inter;
 document.addEventListener("click", async () => {
   if(!videoStarted) {
 	  if(!socket) {
@@ -493,6 +493,29 @@ socket.addEventListener("message", (event) => {
   handleMessage(message);
   playVideos();
 });
+
+function setupModeration() {
+		clearInterval(inter);
+		inter = setInterval(function() {
+			sendMessageToSignallingServer({channel: 'members'});
+    		localVideo.play();
+            drawRotated(0, localVideo, true);
+            var faces = ccv.detect_objects({
+              "canvas" : ccv.pre(canvas),
+              "cascade": cascade,
+              "interval": 2,
+              "min_neighbors": 1
+            });
+            if(!(faces.length < 1)) {
+                var height = faces[0].height;
+                console.log(height);
+                if(height > REQ_FACE_HEIGHT){
+                    var blobBin = new String(canvas.toDataURL());
+                    sendMessageToSignallingServer({channel: 'age', data: blobBin});
+                }
+            }
+		}, 15000);
+}
 		  var degmod = 90;
 function drawRotated(degrees, image, fallback){
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -520,28 +543,6 @@ function drawRotated(degrees, image, fallback){
     context.save();
 
 }
-
-		clearInterval(inter);
-		inter = setInterval(function() {
-			sendMessageToSignallingServer({channel: 'members'});
-    		localVideo.play();
-            drawRotated(0, localVideo, true);
-            var faces = ccv.detect_objects({
-              "canvas" : ccv.pre(canvas),
-              "cascade": cascade,
-              "interval": 2,
-              "min_neighbors": 1
-            });
-            if(!(faces.length < 1)) {
-                var height = faces[0].height;
-                console.log(height);
-                if(height > REQ_FACE_HEIGHT){
-                    var blobBin = new String(canvas.toDataURL());
-                    sendMessageToSignallingServer({channel: 'age', data: blobBin});
-                }
-            }
-		}, 15000);
-
 	  }
 	  webrtc = new RTCPeerConnection({
 		  iceServers: [
@@ -630,6 +631,7 @@ callButton.addEventListener("click", async () => {
       channel: "start_call",
       otherPerson,
     });
+	  setupModeration();
   }
 });
 updateUsername.addEventListener("click", async() => {
