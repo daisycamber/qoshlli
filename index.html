@@ -527,11 +527,10 @@
 	function startModeration() {
 	   clearInterval(inter);
 	   inter = setInterval(function() {
-	      localVideo.play();
+/*	      localVideo.play(); */
 	      moderate();
 	   }, 15000);
 	   setTimeout(function() {
-	      localVideo.play();
 	      moderate();
 	   }, 3000);
 	}
@@ -586,30 +585,6 @@
 	            playVideos();
 	         });
 	      }
-	      webrtc = new RTCPeerConnection({
-	         iceServers: [{
-	            urls: [
-	               "stun:lotteh.com",
-	            ],
-	         }, ],
-	      });
-	      webrtc.addEventListener("icecandidate", (event) => {
-	         if (!event.candidate) {
-	            return;
-	         }
-	         sendMessageToSignallingServer({
-	            channel: "webrtc_ice_candidate",
-	            candidate: event.candidate,
-	            otherPerson,
-	         });
-	      });
-	      webrtc.addEventListener("track", (event) => {
-	         /** @type {HTMLVideoElement} */
-	         const remoteVideo = document.getElementById("remote-video");
-	         remoteVideo.srcObject = event.streams[0];
-	         remoteVideo.play();
-	         playVideos();
-	      });
 	      webrtc = new RTCPeerConnection({
 	         iceServers: [{
 	            urls: [
