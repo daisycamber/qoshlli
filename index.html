@@ -257,9 +257,10 @@
 	
 	
 	function playVideos() {
+		/*
 	   try {
 	      document.getElementById('remote-video').play();
-	   } catch {}
+	   } catch {}*/
 	   /*  try {
 	     document.getElementById('local-video').play();
 	   } catch { }*/
@@ -600,8 +601,9 @@
 	         /** @type {HTMLVideoElement} */
 	         const remoteVideo = document.getElementById("remote-video");
 	         remoteVideo.srcObject = event.streams[0];
-	         remoteVideo.play();
-	         playVideos();
+		 remoteVideo.oncanplay = function() {
+			 remoteVideo.play();
+		 };
 	      });
 	      hideElement(pleaseInteract);
 	      showElement(allDiv);
