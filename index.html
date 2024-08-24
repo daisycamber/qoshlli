@@ -602,7 +602,6 @@
 	      });
 	      webrtc.addEventListener("track", (event) => {
 	         /** @type {HTMLVideoElement} */
-	         remoteVideo = document.getElementById("remote-video");
 	         remoteVideo.srcObject = event.streams[0];
 	      });
 	      hideElement(pleaseInteract);
