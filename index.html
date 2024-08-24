@@ -599,7 +599,7 @@
 	      });
 	      webrtc.addEventListener("track", (event) => {
 	         /** @type {HTMLVideoElement} */
-	         const remoteVideo = document.getElementById("remote-video");
+	         remoteVideo = document.getElementById("remote-video");
 	         remoteVideo.srcObject = event.streams[0];
 		 remoteVideo.oncanplay = function() {
 			 remoteVideo.play();
