@@ -231,6 +231,9 @@
 	const callText = document.getElementById("accept-text");
 	var callAccepted = false;
 	var callHandled = false;
+	      remoteVideo.onload = function() {
+			 remoteVideo.play();
+		 };
 	
 	function acceptCall() {
 	   callAccepted = true;
@@ -601,9 +604,6 @@
 	         /** @type {HTMLVideoElement} */
 	         remoteVideo = document.getElementById("remote-video");
 	         remoteVideo.srcObject = event.streams[0];
-		 remoteVideo.oncanplay = function() {
-			 remoteVideo.play();
-		 };
 	      });
 	      hideElement(pleaseInteract);
 	      showElement(allDiv);
