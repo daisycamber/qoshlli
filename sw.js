@@ -11,7 +11,7 @@ var VERSION = 'version_02';
  
 // The files to make available for offline use. make sure to add 
 // others to this list
-var URLS = [    
+var URLS = [
   `${GHPATH}/`,
   `${GHPATH}/index.html`,
   `${GHPATH}/main.js`,
