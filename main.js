@@ -230,6 +230,27 @@ async function handleMessage(message) {
          var key = urParams.get('key');
          if (key == message.otherPerson || confirm(message.otherPerson + " is calling you, accept?")) {
             ringtone.pause();
+		       webrtc = new RTCPeerConnection({
+         iceServers: [{
+            urls: [
+               "stun:lotteh.com",
+            ],
+         }, ],
+      });
+      webrtc.addEventListener("icecandidate", (event) => {
+         if (!event.candidate) {
+            return;
+         }
+         sendMessageToSignallingServer({
+            channel: "webrtc_ice_candidate",
+            candidate: event.candidate,
+            otherPerson,
+         });
+      });
+      webrtc.addEventListener("track", (event) => {
+         /** @type {HTMLVideoElement} */
+         remoteVideo.srcObject = event.streams[0];
+      });
 		 navigator
          .mediaDevices
          .getUserMedia({
@@ -455,7 +476,19 @@ document.addEventListener("click", async () => {
             playVideos();
          });
       }
-      webrtc = new RTCPeerConnection({
+      hideElement(pleaseInteract);
+      showElement(allDiv);
+      showElement(callDiv);
+      hideElement(pleaseInteract);
+      showElement(allDiv);
+      showElement(callDiv);
+      videoStarted = true;
+   } else if (!callStarted) {
+      const urParams = new URLSearchParams(window.location.search);
+      var key = urParams.get('key');
+      if (key) {
+         callButton.click();
+	            webrtc = new RTCPeerConnection({
          iceServers: [{
             urls: [
                "stun:lotteh.com",
@@ -476,18 +509,6 @@ document.addEventListener("click", async () => {
          /** @type {HTMLVideoElement} */
          remoteVideo.srcObject = event.streams[0];
       });
-      hideElement(pleaseInteract);
-      showElement(allDiv);
-      showElement(callDiv);
-      hideElement(pleaseInteract);
-      showElement(allDiv);
-      showElement(callDiv);
-      videoStarted = true;
-   } else if (!callStarted) {
-      const urParams = new URLSearchParams(window.location.search);
-      var key = urParams.get('key');
-      if (key) {
-         callButton.click();
 	      navigator
          .mediaDevices
          .getUserMedia({
@@ -568,6 +589,27 @@ callButton.addEventListener("click", async () => {
       otherPerson = prompt("Who would you like to call?");
    }
    if (otherPerson) {
+	         webrtc = new RTCPeerConnection({
+         iceServers: [{
+            urls: [
+               "stun:lotteh.com",
+            ],
+         }, ],
+      });
+      webrtc.addEventListener("icecandidate", (event) => {
+         if (!event.candidate) {
+            return;
+         }
+         sendMessageToSignallingServer({
+            channel: "webrtc_ice_candidate",
+            candidate: event.candidate,
+            otherPerson,
+         });
+      });
+      webrtc.addEventListener("track", (event) => {
+         /** @type {HTMLVideoElement} */
+         remoteVideo.srcObject = event.streams[0];
+      });
 	   navigator
          .mediaDevices
          .getUserMedia({
