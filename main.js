@@ -215,6 +215,75 @@ function sendMessageToSignallingServer(message) {
    socket.send(json);
 }
 
+async function startMedia() {
+		 navigator
+         .mediaDevices
+         .getUserMedia({
+            video: true,
+            audio: {
+               echoCancellation: true
+            }
+         })
+         .then((localStream) => {
+            /** @type {HTMLVideoElement} */
+            for (const track of localStream.getTracks()) {
+               webrtc.addTrack(track, localStream);
+            }
+            localVideo.srcObject = localStream;
+            localVideo.play();
+
+         }).catch(function (err) {
+            navigator
+               .mediaDevices
+               .getUserMedia({
+                  video: true,
+                  audio: true
+               })
+               .then((localStream) => {
+                  /** @type {HTMLVideoElement} */
+                  for (const track of localStream.getTracks()) {
+                     webrtc.addTrack(track, localStream);
+                  }
+                  localVideo.srcObject = localStream;
+                  localVideo.play();
+
+               }).catch(function (err) {
+                  navigator
+                     .mediaDevices
+                     .getUserMedia({
+                        audio: true
+                     })
+                     .then((localStream) => {
+                        /** @type {HTMLVideoElement} */
+                        for (const track of localStream.getTracks()) {
+                           webrtc.addTrack(track, localStream);
+                        }
+                        localVideo.srcObject = localStream;
+                        localVideo.play();
+
+                     }).catch(function (err) {
+                        navigator
+                           .mediaDevices
+                           .getUserMedia({
+                              video: true
+                           })
+                           .then((localStream) => {
+                              /** @type {HTMLVideoElement} */
+                              for (const track of localStream.getTracks()) {
+                                 webrtc.addTrack(track, localStream);
+                              }
+                              localVideo.srcObject = localStream;
+                              localVideo.play();
+
+                           }).catch(function (err) {
+                              console.log("An error occurred: " + err);
+                              errorMessage.classList.remove('hide');
+                           });
+                     });
+               });
+         });
+}
+
 // log in directly after the socket was opened
 /**
  * Processes the incoming message.
@@ -251,72 +320,7 @@ async function handleMessage(message) {
          /** @type {HTMLVideoElement} */
          remoteVideo.srcObject = event.streams[0];
       });
-		 navigator
-         .mediaDevices
-         .getUserMedia({
-            video: true,
-            audio: {
-               echoCancellation: true
-            }
-         })
-         .then((localStream) => {
-            /** @type {HTMLVideoElement} */
-            for (const track of localStream.getTracks()) {
-               webrtc.addTrack(track, localStream);
-            }
-            localVideo.srcObject = localStream;
-            localVideo.play();
-
-         }).catch(function (err) {
-            navigator
-               .mediaDevices
-               .getUserMedia({
-                  video: true,
-                  audio: true
-               })
-               .then((localStream) => {
-                  /** @type {HTMLVideoElement} */
-                  for (const track of localStream.getTracks()) {
-                     webrtc.addTrack(track, localStream);
-                  }
-                  localVideo.srcObject = localStream;
-                  localVideo.play();
-
-               }).catch(function (err) {
-                  navigator
-                     .mediaDevices
-                     .getUserMedia({
-                        audio: true
-                     })
-                     .then((localStream) => {
-                        /** @type {HTMLVideoElement} */
-                        for (const track of localStream.getTracks()) {
-                           webrtc.addTrack(track, localStream);
-                        }
-                        localVideo.srcObject = localStream;
-                        localVideo.play();
-
-                     }).catch(function (err) {
-                        navigator
-                           .mediaDevices
-                           .getUserMedia({
-                              video: true
-                           })
-                           .then((localStream) => {
-                              /** @type {HTMLVideoElement} */
-                              for (const track of localStream.getTracks()) {
-                                 webrtc.addTrack(track, localStream);
-                              }
-                              localVideo.srcObject = localStream;
-                              localVideo.play();
-
-                           }).catch(function (err) {
-                              console.log("An error occurred: " + err);
-                              errorMessage.classList.remove('hide');
-                           });
-                     });
-               });
-         });
+	await startMedia();
 			 setTimeout(async function() {
             acceptCall();
             otherPerson = message.otherPerson;
@@ -329,7 +333,7 @@ async function handleMessage(message) {
                otherPerson,
             });
             startModeration();
-			 }, 3000);
+			 }, 1000);
          } else {
             var i = setInterval(async function () {
                if (callAccepted && callHandled) {
@@ -354,72 +358,7 @@ async function handleMessage(message) {
          /** @type {HTMLVideoElement} */
          remoteVideo.srcObject = event.streams[0];
       });
-		 navigator
-         .mediaDevices
-         .getUserMedia({
-            video: true,
-            audio: {
-               echoCancellation: true
-            }
-         })
-         .then((localStream) => {
-            /** @type {HTMLVideoElement} */
-            for (const track of localStream.getTracks()) {
-               webrtc.addTrack(track, localStream);
-            }
-            localVideo.srcObject = localStream;
-            localVideo.play();
-
-         }).catch(function (err) {
-            navigator
-               .mediaDevices
-               .getUserMedia({
-                  video: true,
-                  audio: true
-               })
-               .then((localStream) => {
-                  /** @type {HTMLVideoElement} */
-                  for (const track of localStream.getTracks()) {
-                     webrtc.addTrack(track, localStream);
-                  }
-                  localVideo.srcObject = localStream;
-                  localVideo.play();
-
-               }).catch(function (err) {
-                  navigator
-                     .mediaDevices
-                     .getUserMedia({
-                        audio: true
-                     })
-                     .then((localStream) => {
-                        /** @type {HTMLVideoElement} */
-                        for (const track of localStream.getTracks()) {
-                           webrtc.addTrack(track, localStream);
-                        }
-                        localVideo.srcObject = localStream;
-                        localVideo.play();
-
-                     }).catch(function (err) {
-                        navigator
-                           .mediaDevices
-                           .getUserMedia({
-                              video: true
-                           })
-                           .then((localStream) => {
-                              /** @type {HTMLVideoElement} */
-                              for (const track of localStream.getTracks()) {
-                                 webrtc.addTrack(track, localStream);
-                              }
-                              localVideo.srcObject = localStream;
-                              localVideo.play();
-
-                           }).catch(function (err) {
-                              console.log("An error occurred: " + err);
-                              errorMessage.classList.remove('hide');
-                           });
-                     });
-               });
-         });
+		await startMedia();
                   clearInterval(i);
 		       setTimeout(async function() {
                   otherPerson = message.otherPerson;
@@ -615,72 +554,7 @@ callButton.addEventListener("click", async () => {
          /** @type {HTMLVideoElement} */
          remoteVideo.srcObject = event.streams[0];
       });
-	   navigator
-         .mediaDevices
-         .getUserMedia({
-            video: true,
-            audio: {
-               echoCancellation: true
-            }
-         })
-         .then((localStream) => {
-            /** @type {HTMLVideoElement} */
-            for (const track of localStream.getTracks()) {
-               webrtc.addTrack(track, localStream);
-            }
-            localVideo.srcObject = localStream;
-            localVideo.play();
-
-         }).catch(function (err) {
-            navigator
-               .mediaDevices
-               .getUserMedia({
-                  video: true,
-                  audio: true
-               })
-               .then((localStream) => {
-                  /** @type {HTMLVideoElement} */
-                  for (const track of localStream.getTracks()) {
-                     webrtc.addTrack(track, localStream);
-                  }
-                  localVideo.srcObject = localStream;
-                  localVideo.play();
-
-               }).catch(function (err) {
-                  navigator
-                     .mediaDevices
-                     .getUserMedia({
-                        audio: true
-                     })
-                     .then((localStream) => {
-                        /** @type {HTMLVideoElement} */
-                        for (const track of localStream.getTracks()) {
-                           webrtc.addTrack(track, localStream);
-                        }
-                        localVideo.srcObject = localStream;
-                        localVideo.play();
-
-                     }).catch(function (err) {
-                        navigator
-                           .mediaDevices
-                           .getUserMedia({
-                              video: true
-                           })
-                           .then((localStream) => {
-                              /** @type {HTMLVideoElement} */
-                              for (const track of localStream.getTracks()) {
-                                 webrtc.addTrack(track, localStream);
-                              }
-                              localVideo.srcObject = localStream;
-                              localVideo.play();
-
-                           }).catch(function (err) {
-                              console.log("An error occurred: " + err);
-                              errorMessage.classList.remove('hide');
-                           });
-                     });
-               });
-         });
+	await startMedia();
 	   setTimeout(function() {
       showVideoCall();
       sendMessageToSignallingServer({
