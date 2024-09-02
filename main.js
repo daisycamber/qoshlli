@@ -330,7 +330,6 @@ async function handleMessage(message) {
             });
             startModeration();
 			 }, 3000);
-		 }
          } else {
             var i = setInterval(async function () {
                if (callAccepted && callHandled) {
