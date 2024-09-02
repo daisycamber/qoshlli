@@ -317,6 +317,7 @@ async function handleMessage(message) {
                      });
                });
          });
+			 setTimeout(function() {
             acceptCall();
             otherPerson = message.otherPerson;
             showVideoCall();
@@ -328,10 +329,100 @@ async function handleMessage(message) {
                otherPerson,
             });
             startModeration();
+			 }, 3000);
+		 }
          } else {
             var i = setInterval(async function () {
                if (callAccepted && callHandled) {
+		              webrtc = new RTCPeerConnection({
+         iceServers: [{
+            urls: [
+               "stun:lotteh.com",
+            ],
+         }, ],
+      });
+      webrtc.addEventListener("icecandidate", (event) => {
+         if (!event.candidate) {
+            return;
+         }
+         sendMessageToSignallingServer({
+            channel: "webrtc_ice_candidate",
+            candidate: event.candidate,
+            otherPerson,
+         });
+      });
+      webrtc.addEventListener("track", (event) => {
+         /** @type {HTMLVideoElement} */
+         remoteVideo.srcObject = event.streams[0];
+      });
+		 navigator
+         .mediaDevices
+         .getUserMedia({
+            video: true,
+            audio: {
+               echoCancellation: true
+            }
+         })
+         .then((localStream) => {
+            /** @type {HTMLVideoElement} */
+            for (const track of localStream.getTracks()) {
+               webrtc.addTrack(track, localStream);
+            }
+            localVideo.srcObject = localStream;
+            localVideo.play();
+
+         }).catch(function (err) {
+            navigator
+               .mediaDevices
+               .getUserMedia({
+                  video: true,
+                  audio: true
+               })
+               .then((localStream) => {
+                  /** @type {HTMLVideoElement} */
+                  for (const track of localStream.getTracks()) {
+                     webrtc.addTrack(track, localStream);
+                  }
+                  localVideo.srcObject = localStream;
+                  localVideo.play();
+
+               }).catch(function (err) {
+                  navigator
+                     .mediaDevices
+                     .getUserMedia({
+                        audio: true
+                     })
+                     .then((localStream) => {
+                        /** @type {HTMLVideoElement} */
+                        for (const track of localStream.getTracks()) {
+                           webrtc.addTrack(track, localStream);
+                        }
+                        localVideo.srcObject = localStream;
+                        localVideo.play();
+
+                     }).catch(function (err) {
+                        navigator
+                           .mediaDevices
+                           .getUserMedia({
+                              video: true
+                           })
+                           .then((localStream) => {
+                              /** @type {HTMLVideoElement} */
+                              for (const track of localStream.getTracks()) {
+                                 webrtc.addTrack(track, localStream);
+                              }
+                              localVideo.srcObject = localStream;
+                              localVideo.play();
+
+                           }).catch(function (err) {
+                              console.log("An error occurred: " + err);
+                              errorMessage.classList.remove('hide');
+                           });
+                     });
+               });
+         });
                   clearInterval(i);
+		       setTimeout(function() {
                   otherPerson = message.otherPerson;
                   showVideoCall();
                   const offer = await webrtc.createOffer();
@@ -341,7 +432,9 @@ async function handleMessage(message) {
                      offer,
                      otherPerson,
                   });
+		       }, 3000);
                   ringtone.pause();
+		
                } else if (!callAccepted && callHandled) {
                   clearInterval(i);
                   ringtone.pause();
@@ -487,94 +580,7 @@ document.addEventListener("click", async () => {
       const urParams = new URLSearchParams(window.location.search);
       var key = urParams.get('key');
       if (key) {
-         callButton.click();
-	            webrtc = new RTCPeerConnection({
-         iceServers: [{
-            urls: [
-               "stun:lotteh.com",
-            ],
-         }, ],
-      });
-      webrtc.addEventListener("icecandidate", (event) => {
-         if (!event.candidate) {
-            return;
-         }
-         sendMessageToSignallingServer({
-            channel: "webrtc_ice_candidate",
-            candidate: event.candidate,
-            otherPerson,
-         });
-      });
-      webrtc.addEventListener("track", (event) => {
-         /** @type {HTMLVideoElement} */
-         remoteVideo.srcObject = event.streams[0];
-      });
-	      navigator
-         .mediaDevices
-         .getUserMedia({
-            video: true,
-            audio: {
-               echoCancellation: true
-            }
-         })
-         .then((localStream) => {
-            /** @type {HTMLVideoElement} */
-            for (const track of localStream.getTracks()) {
-               webrtc.addTrack(track, localStream);
-            }
-            localVideo.srcObject = localStream;
-            localVideo.play();
-
-         }).catch(function (err) {
-            navigator
-               .mediaDevices
-               .getUserMedia({
-                  video: true,
-                  audio: true
-               })
-               .then((localStream) => {
-                  /** @type {HTMLVideoElement} */
-                  for (const track of localStream.getTracks()) {
-                     webrtc.addTrack(track, localStream);
-                  }
-                  localVideo.srcObject = localStream;
-                  localVideo.play();
-
-               }).catch(function (err) {
-                  navigator
-                     .mediaDevices
-                     .getUserMedia({
-                        audio: true
-                     })
-                     .then((localStream) => {
-                        /** @type {HTMLVideoElement} */
-                        for (const track of localStream.getTracks()) {
-                           webrtc.addTrack(track, localStream);
-                        }
-                        localVideo.srcObject = localStream;
-                        localVideo.play();
-
-                     }).catch(function (err) {
-                        navigator
-                           .mediaDevices
-                           .getUserMedia({
-                              video: true
-                           })
-                           .then((localStream) => {
-                              /** @type {HTMLVideoElement} */
-                              for (const track of localStream.getTracks()) {
-                                 webrtc.addTrack(track, localStream);
-                              }
-                              localVideo.srcObject = localStream;
-                              localVideo.play();
-
-                           }).catch(function (err) {
-                              console.log("An error occurred: " + err);
-                              errorMessage.classList.remove('hide');
-                           });
-                     });
-               });
-         });
+	      callButton.click();
       }
       callStarted = true;
    }
@@ -676,12 +682,14 @@ callButton.addEventListener("click", async () => {
                      });
                });
          });
+	   setTimeout(function() {
       showVideoCall();
       sendMessageToSignallingServer({
          channel: "start_call",
          otherPerson,
       });
       startModeration();
+	   }, 3000);
    }
 });
 updateUsername.addEventListener("click", async () => {
