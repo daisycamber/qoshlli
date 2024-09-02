@@ -317,7 +317,7 @@ async function handleMessage(message) {
                      });
                });
          });
-			 setTimeout(function() {
+			 setTimeout(async function() {
             acceptCall();
             otherPerson = message.otherPerson;
             showVideoCall();
@@ -422,7 +422,7 @@ async function handleMessage(message) {
                });
          });
                   clearInterval(i);
-		       setTimeout(function() {
+		       setTimeout(async function() {
                   otherPerson = message.otherPerson;
                   showVideoCall();
                   const offer = await webrtc.createOffer();
