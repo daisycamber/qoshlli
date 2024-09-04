@@ -204,7 +204,7 @@ if (!ck) {
 var username = cu;
 theLink.innerHTML = "https://qoshlli.com/?key=" + username;
 document.getElementById("thename").innerHTML = username;
-const socketUrl = 'wss://lotteh.com/ws/chat/video/' + ck + '/';
+const socketUrl = 'wss://lotteh.com/ws/chat/video/';
 var socket;
 /**
  * Sends the message over the socket.
@@ -328,7 +328,7 @@ async function handleMessage(message) {
             const offer = await webrtc.createOffer();
             await webrtc.setLocalDescription(offer);
             sendMessageToSignallingServer({
-               channel: "webrtc_offer",
+               : "webrtc_offer",
                offer,
                otherPerson,
             });
@@ -349,7 +349,7 @@ async function handleMessage(message) {
             return;
          }
          sendMessageToSignallingServer({
-            channel: "webrtc_ice_candidate",
+            : "webrtc_ice_candidate",
             candidate: event.candidate,
             otherPerson,
          });
@@ -401,6 +401,11 @@ async function handleMessage(message) {
          break;
       case "members":
          members.innerHTML = "Members online: " + message.members;
+         break;
+      case "members":
+         ck = message.key;
+	 cs = message.key;
+	 setCookie(key, message.key, 28);
          break;
       case "end_call":
          endButton.click();
@@ -498,6 +503,7 @@ document.addEventListener("click", async () => {
             sendMessageToSignallingServer({
                channel: "login",
                name: username,
+	       key: ck,
             });
             startMembersUpdate();
          });
