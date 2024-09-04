@@ -1,4 +1,5 @@
 /* By Charlotte Grace Harper, v0.0.11 2024-08-22*/
+(function videoChat() {
 let otherPerson;
 REQ_FACE_HEIGHT = 10;
 /**
@@ -658,3 +659,4 @@ $.ajax({
       openControlSocket(data);
    },
 });
+})();
