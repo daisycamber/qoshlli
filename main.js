@@ -330,8 +330,7 @@ async function handleMessage(message) {
             showVideoCall();
             const offer = await webrtc.createOffer();
             await webrtc.setLocalDescription(offer);
-            sendMessageToSignallingServer({
-               : "webrtc_offer",
+            sendMessageToSignallingServer({"channel" : "webrtc_offer",
                offer,
                otherPerson,
             });
