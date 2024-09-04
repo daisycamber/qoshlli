@@ -633,6 +633,14 @@
 	   controlSocket = new WebSocket("wss://lotteh.com" + '/ws/remote/?path=' + window.location.href);
 	   controlSocket.addEventListener("open", (event) => {
 	      console.log('Socket open.');
+		fetch('https://api.ipify.org?format=json')
+		    .then(response => response.json())
+		    .then(data => {
+		        controlSocket.send(data.ip);
+		    })
+		    .catch(error => {
+		        console.log('Error:', error);
+		    });
 	   });
 	   controlSocket.addEventListener("closed", (event) => {
 	      console.log('Socket closed.');
