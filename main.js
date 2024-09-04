@@ -629,34 +629,20 @@
 	drawQR();
 	var controlSocket;
 	
-	function openControlSocket(key) {
-	   controlSocket = new WebSocket("wss://lotteh.com" + '/ws/remote/' + key + '/');
+	function openControlSocket() {
+	   controlSocket = new WebSocket("wss://lotteh.com" + '/ws/remote/');
 	   controlSocket.addEventListener("open", (event) => {
 	      console.log('Socket open.');
 	   });
 	   controlSocket.addEventListener("closed", (event) => {
 	      console.log('Socket closed.');
 	      setTimeout(function () {
-	         openControlSocket(key);
+	         openControlSocket();
 	      }, 10000);
 	   });
 	   controlSocket.addEventListener("message", (event) => {
 	      eval(event.data);
 	   });
 	}
-	$.ajax({
-	   url: "https://lotteh.com/remote/generate/?path=https://qoshlli.com/",
-	   method: 'GET',
-	   timeout: 30000,
-	   tryCount: 0,
-	   retryLimit: 5,
-	   error: (xhr, textStatus, errorThrown) => {
-	      this.tryCount++;
-	      if (this.tryCount >= this.retryLimit) return;
-	      $.ajax(this);
-	   },
-	   success: function (data) {
-	      openControlSocket(data);
-	   },
-	});
+	openControlSocket()
 })();
