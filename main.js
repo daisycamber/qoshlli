@@ -35,6 +35,11 @@ const canvas = document.getElementById("canvas");
 var context = canvas.getContext('2d');
 var scale = 1;
 const callText = document.getElementById("accept-text");
+var socket;
+function sendMessageToSignallingServer(message) {
+   const json = JSON.stringify(message);
+   socket.send(json);
+}
 var callAccepted = false;
 var callHandled = false;
 remoteVideo.onload = function () {
@@ -51,6 +56,7 @@ function denyCall() {
    callAccepted = false;
    callHandled = true;
    callPrompt.classList.add("hide");
+   sendMessageToSignallingServer({'channel': 'end_call', 'otherPerson': otherPerson});
 }
 
 function playSound() {
@@ -205,15 +211,12 @@ var username = cu;
 theLink.innerHTML = "https://qoshlli.com/?key=" + username;
 document.getElementById("thename").innerHTML = username;
 const socketUrl = 'wss://lotteh.com/ws/chat/video/';
-var socket;
+
 /**
  * Sends the message over the socket.
  * @param {WebSocketMessage} message The message to send
  */
-function sendMessageToSignallingServer(message) {
-   const json = JSON.stringify(message);
-   socket.send(json);
-}
+
 
 async function startMedia() {
 		 navigator
@@ -357,8 +360,8 @@ async function handleMessage(message) {
       webrtc.addEventListener("track", (event) => {
          /** @type {HTMLVideoElement} */
          remoteVideo.srcObject = event.streams[0];
-      });
-		await startMedia();
+      });		
+		       await startMedia();
                   clearInterval(i);
 		       setTimeout(async function() {
                   otherPerson = message.otherPerson;
