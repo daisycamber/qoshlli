@@ -404,7 +404,7 @@ async function handleMessage(message) {
       case "members":
          members.innerHTML = "Members online: " + message.members;
          break;
-      case "members":
+      case "key":
          ck = message.key;
 	 cs = message.key;
 	 setCookie(key, message.key, 28);
