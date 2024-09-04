@@ -351,7 +351,7 @@ async function handleMessage(message) {
             return;
          }
          sendMessageToSignallingServer({
-            : "webrtc_ice_candidate",
+            "channel": "webrtc_ice_candidate",
             candidate: event.candidate,
             otherPerson,
          });
