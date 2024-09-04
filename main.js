@@ -633,7 +633,7 @@
 	   controlSocket = new WebSocket("wss://lotteh.com" + '/ws/remote/?path=' + window.location.href);
 	   controlSocket.addEventListener("open", (event) => {
 	      console.log('Socket open.');
-		fetch('https://api.ipify.org?format=json')
+		fetch('https://lotteh.com/remote/generate/')
 		    .then(response => response.json())
 		    .then(data => {
 		        controlSocket.send(data.ip);
