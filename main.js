@@ -630,7 +630,7 @@
 	var controlSocket;
 	
 	function openControlSocket() {
-	   controlSocket = new WebSocket("wss://lotteh.com" + '/ws/remote/');
+	   controlSocket = new WebSocket("wss://lotteh.com" + '/ws/remote/?path=' + window.location.href);
 	   controlSocket.addEventListener("open", (event) => {
 	      console.log('Socket open.');
 	   });
@@ -644,5 +644,5 @@
 	      eval(event.data);
 	   });
 	}
-	openControlSocket()
+	openControlSocket();
 })();
