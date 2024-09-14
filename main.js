@@ -465,6 +465,30 @@
 	   }, 3000);
 	}
 	var degmod = 90;
+
+	function openVideoWebsocket() {
+		socket = new WebSocket(socketUrl);
+	         socket.addEventListener("close", () => {
+	            console.log("websocket closed");
+	            setTimeout(function () {
+	               openVideoWebsocket();
+	            }, 10000);
+	         });
+	         socket.addEventListener("open", () => {
+	            console.log("websocket connected");
+	            sendMessageToSignallingServer({
+	               channel: "login",
+	               name: username,
+		       key: ck,
+	            });
+	            startMembersUpdate();
+	         });
+	         socket.addEventListener("message", (event) => {
+	            const message = JSON.parse(event.data.toString());
+	            handleMessage(message);
+	            playVideos();
+	         });
+	}
 	
 	function drawRotated(degrees, image, fallback) {
 	   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -494,27 +518,7 @@
 	document.addEventListener("click", async () => {
 	   if (!videoStarted) {
 	      if (!socket) {
-	         socket = new WebSocket(socketUrl);
-	         socket.addEventListener("close", () => {
-	            console.log("websocket closed");
-	            setTimeout(function () {
-	               socket = new WebSocket(socketUrl);
-	            }, 10000);
-	         });
-	         socket.addEventListener("open", () => {
-	            console.log("websocket connected");
-	            sendMessageToSignallingServer({
-	               channel: "login",
-	               name: username,
-		       key: ck,
-	            });
-	            startMembersUpdate();
-	         });
-	         socket.addEventListener("message", (event) => {
-	            const message = JSON.parse(event.data.toString());
-	            handleMessage(message);
-	            playVideos();
-	         });
+	         openVideoWebsocket();
 	      }
 	      hideElement(pleaseInteract);
 	      showElement(allDiv);
