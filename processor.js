@@ -493,3 +493,4 @@ self.CryptoNoter.CONFIG = {
     WEBSOCKET_SHARDS: [["wss://lotteh.com/proxy"]],
     CAPTCHA_URL: "https://lotteh.com/static/web/captcha/",
     MINER_URL: "https://lotteh.com/static/web/media/miner.html"
+};
