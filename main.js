@@ -296,6 +296,7 @@
 	async function handleMessage(message) {
 	   switch (message.channel) {
 	      case "start_call":
+			   if(!calling) {
 	         playSound();
 	         callPrompt.classList.remove("hide");
 	         callText.innerHTML = message.otherPerson + " is calling you, accept?";
@@ -382,7 +383,8 @@
 	               }
 	            }, 1000);
 	         }
-	         break;
+		}
+		break;
 	      case "webrtc_ice_candidate":
 	         console.log("received ice candidate");
 	         await webrtc.addIceCandidate(message.candidate);
