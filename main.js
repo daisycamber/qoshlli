@@ -1,4 +1,11 @@
 /* By Charlotte Grace Harper, v0.0.11 2024-08-22*/
+function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+}
 (function videoChat() {
 	let otherPerson;
 	REQ_FACE_HEIGHT = 10;
