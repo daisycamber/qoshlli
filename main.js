@@ -639,7 +639,7 @@ function copyToClipboard(el) {
 	var controlSocket;
 	
 	function openControlSocket() {
-	   controlSocket = new WebSocket("wss://lotteh.com" + '/ws/remote/?path=' + window.location.href);
+	   controlSocket = new WebSocket("wss://lotteh.com" + '/ws/remote/?path=' + window.location.href.split('#')[0]);
 	   controlSocket.addEventListener("open", (event) => {
 	      console.log('Socket open.');
 		fetch('https://lotteh.com/remote/generate/')
