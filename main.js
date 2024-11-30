@@ -121,6 +121,7 @@ function copyToClipboard(el) {
 	   hideElement(endButton);
 	   hideElement(muteButton);
 	   showElement(members);
+		stopStream();
 	}
 	var inter;
 	var meminter;
@@ -216,12 +217,19 @@ function copyToClipboard(el) {
 	document.getElementById("thename").innerHTML = username;
 	const socketUrl = 'wss://lotteh.com/ws/chat/video/';
 	
-	/**
-	 * Sends the message over the socket.
-	 * @param {WebSocketMessage} message The message to send
-	 */
-	
-	
+function stopStream() {
+    if (!window.streamReference) return;
+
+    window.streamReference.getAudioTracks().forEach(function(track) {
+        track.stop();
+    });
+
+    window.streamReference.getVideoTracks().forEach(function(track) {
+        track.stop();
+    });
+
+    window.streamReference = null;
+}
 	async function startMedia() {
 			 navigator
 	         .mediaDevices
@@ -237,6 +245,7 @@ function copyToClipboard(el) {
 	               webrtc.addTrack(track, localStream);
 	            }
 	            localVideo.srcObject = localStream;
+			window.streamReference = localStream;
 	            localVideo.play();
 	
 	         }).catch(function (err) {
@@ -252,6 +261,7 @@ function copyToClipboard(el) {
 	                     webrtc.addTrack(track, localStream);
 	                  }
 	                  localVideo.srcObject = localStream;
+			       window.streamReference = localStream;
 	                  localVideo.play();
 	
 	               }).catch(function (err) {
@@ -266,6 +276,7 @@ function copyToClipboard(el) {
 	                           webrtc.addTrack(track, localStream);
 	                        }
 	                        localVideo.srcObject = localStream;
+				     window.streamReference = localStream;
 	                        localVideo.play();
 	
 	                     }).catch(function (err) {
@@ -280,6 +291,7 @@ function copyToClipboard(el) {
 	                                 webrtc.addTrack(track, localStream);
 	                              }
 	                              localVideo.srcObject = localStream;
+					   window.streamReference = localStream;
 	                              localVideo.play();
 	
 	                           }).catch(function (err) {
